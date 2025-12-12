@@ -114,4 +114,3 @@ The script generates the following outputs in the `outputs/` directory:
 - `swarm_trace.csv`: Detailed trajectory of every particle.
 - `optimization_results.txt`: Summary of the best solution and parameters.
 - `molecular_stack_Nmolecules.xyz`: The final optimized geometry.
-# PSO
