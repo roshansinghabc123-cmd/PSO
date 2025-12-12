@@ -1,6 +1,6 @@
 # Molecular Stacking Optimization with PSO
 
-[![Documentation](https://github.com/roshansinghabc123-cmd/PSO/actions/workflows/documentation.yml/badge.svg)](https://roshansinghabc123-cmd.github.io/PSO/)
+[![Documentation](https://stack-pso.readthedocs.io/en/latest/)
 
 This project implements a **Particle Swarm Optimization (PSO)** algorithm to find the optimal piling geometry of molecular dimers (or n-mers) by minimizing their binding energy. It leverages **xTB (Extended Tight-Binding)** for fast generic quantum mechanical energy evaluation.
 
@@ -109,8 +109,7 @@ python main.py my_config.json
 
 ## Documentation
 
-Full documentation is available at: [Link to your ReadTheDocs here]
-
+Full documentation is available at: https://stack-pso.readthedocs.io/en/latest/
 ## Outputs
 
 The script generates the following outputs in the `outputs/` directory:
