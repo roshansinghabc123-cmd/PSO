@@ -1,0 +1,36 @@
+# Configuration file for the Sphinx documentation builder.
+
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+
+project = 'PSO Molecular Stacking'
+copyright = '2025, Roshan Singh'
+author = 'Roshan Singh'
+release = '0.1.0'
+
+# -- General configuration ---------------------------------------------------
+
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',  # Support for Google/NumPy style docstrings
+    'sphinx.ext.viewcode',
+    'sphinx.ext.todo',
+    'sphinx_design',
+    'sphinx_copybutton',
+    'sphinx_togglebutton',
+]
+
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# -- Options for HTML output -------------------------------------------------
+
+html_theme = 'sphinx_rtd_theme'
+html_css_files = ["custom.css"]
+html_static_path = ['_static']
+
+# -- Options for autodoc -----------------------------------------------------
+
+autodoc_mock_imports = ['numpy', 'scipy', 'ase']  # Mock imports for RTD builds if needed
+autoclass_content = 'both'  # Include both class docstring and __init__
