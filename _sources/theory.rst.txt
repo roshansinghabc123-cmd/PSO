@@ -65,13 +65,13 @@ Penalty Functions
 
 To ensure physically realistic and computationally viable configurations, several penalty terms are added to the energy:
 
-1.  **Hard Clash Penalty:** If any two atoms between adjacent monomers are closer than a cutoff distance (:math:`d_{inter} < 1.6 \text{ \AA}`):
+1.  **Hard Clash Penalty:** If any two atoms between adjacent monomers are closer than a cutoff distance (:math:`d_{inter} < 1.6 \text{Å}`):
 
     .. math::
 
        P_{clash} = 1000.0
 
-2.  **Intramolecular Clash Penalty:** For flexible molecules, if atoms within the monomer overlap (:math:`d_{intra} < 1.2 \text{ \AA}`):
+2.  **Intramolecular Clash Penalty:** For flexible molecules, if atoms within the monomer overlap (:math:`d_{intra} < 1.2 \text{Å}`):
     
     .. math::
 
