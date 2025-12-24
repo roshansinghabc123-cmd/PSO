@@ -4,10 +4,10 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-project = 'PSO Molecular Stacking'
-copyright = '2025, Roshan Singh'
-author = 'Roshan Singh'
-release = '0.1.0'
+project = 'π-Stack Optimizer'
+copyright = '2025, Arunima Ghosh, Susmita Barik, Roshan J. Singh, Sandeep K. Reddy'
+author = 'Arunima Ghosh, Susmita Barik, Roshan J. Singh, Sandeep K. Reddy'
+release = '1.0'
 
 # -- General configuration ---------------------------------------------------
 
