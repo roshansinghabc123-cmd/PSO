@@ -104,17 +104,17 @@
 <h2>Particle Swarm Optimization (PSO)<a class="headerlink" href="#particle-swarm-optimization-pso" title="Link to this heading"></a></h2>
 <p>PSO simulates the behavior of a flock of birds. A swarm of particles moves through the parameter space, with each particle’s velocity influenced by its own best known position and the swarm’s global best position.</p>
 <p><strong>Update Equations:</strong></p>
-<p>For each particle $i$ at iteration $t$:</p>
+<p>For each particle <span class="math notranslate nohighlight">\(i\)</span> at iteration <span class="math notranslate nohighlight">\(t\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[v_i^{t+1} = \omega v_i^t + c_1 r_1 (pbest_i - x_i^t) + c_2 r_2 (gbest - x_i^t)\]</div>
 <div class="math notranslate nohighlight">
 \[x_i^{t+1} = x_i^t + v_i^{t+1}\]</div>
 <p>Where:
-*   $omega$: Inertia weight (controls momentum).
-*   $c_1, c_2$: Cognitive and Social coefficients.
-*   $r_1, r_2$: Random numbers in $[0, 1]$.
-*   $pbest_i$: Personal best position of particle $i$.
-*   $gbest$: Global best position of the swarm.</p>
+*   <span class="math notranslate nohighlight">\(\omega\)</span>: Inertia weight (controls momentum).
+*   <span class="math notranslate nohighlight">\(c_1, c_2\)</span>: Cognitive and Social coefficients.
+*   <span class="math notranslate nohighlight">\(r_1, r_2\)</span>: Random numbers in <span class="math notranslate nohighlight">\([0, 1]\)</span>.
+*   <span class="math notranslate nohighlight">\(pbest_i\)</span>: Personal best position of particle <span class="math notranslate nohighlight">\(i\)</span>.
+*   <span class="math notranslate nohighlight">\(gbest\)</span>: Global best position of the swarm.</p>
 </section>
 <section id="genetic-algorithm-ga">
 <h2>Genetic Algorithm (GA)<a class="headerlink" href="#genetic-algorithm-ga" title="Link to this heading"></a></h2>
@@ -129,10 +129,10 @@
 <h2>Grey Wolf Optimizer (GWO)<a class="headerlink" href="#grey-wolf-optimizer-gwo" title="Link to this heading"></a></h2>
 <p>GWO mimics the leadership hierarchy and hunting mechanism of grey wolves.</p>
 <p><strong>Hierarchy:</strong>
-*   $alpha$ (Alpha): The best solution found so far.
-*   $beta$ (Beta): The second best solution.
-*   $delta$ (Delta): The third best solution.
-*   $omega$ (Omega): The rest of the search agents.</p>
+*   <span class="math notranslate nohighlight">\(\alpha\)</span> (Alpha): The best solution found so far.
+*   <span class="math notranslate nohighlight">\(\beta\)</span> (Beta): The second best solution.
+*   <span class="math notranslate nohighlight">\(\delta\)</span> (Delta): The third best solution.
+*   <span class="math notranslate nohighlight">\(\omega\)</span> (Omega): The rest of the search agents.</p>
 <p><strong>Position Update:</strong>
 The position of a wolf is updated by averaging the vectors towards the three leaders:</p>
 <div class="math notranslate nohighlight">

@@ -62,7 +62,7 @@ Generated upon completion of a run:
 3.  **optimization_results.txt**
     
     A summary text file containing:
-    *   Final optimized parameters ($T, C, \theta$).
+    *   Final optimized parameters (:math:`T, C, \theta`).
     *   Final Binding Energy.
     *   Details of the xTB calculation.
 

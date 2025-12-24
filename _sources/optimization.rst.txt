@@ -10,7 +10,7 @@ PSO simulates the behavior of a flock of birds. A swarm of particles moves throu
 
 **Update Equations:**
 
-For each particle $i$ at iteration $t$:
+For each particle :math:`i` at iteration :math:`t`:
 
 .. math::
 
@@ -21,11 +21,11 @@ For each particle $i$ at iteration $t$:
    x_i^{t+1} = x_i^t + v_i^{t+1}
 
 Where:
-*   $\omega$: Inertia weight (controls momentum).
-*   $c_1, c_2$: Cognitive and Social coefficients.
-*   $r_1, r_2$: Random numbers in $[0, 1]$.
-*   $pbest_i$: Personal best position of particle $i$.
-*   $gbest$: Global best position of the swarm.
+*   :math:`\omega`: Inertia weight (controls momentum).
+*   :math:`c_1, c_2`: Cognitive and Social coefficients.
+*   :math:`r_1, r_2`: Random numbers in :math:`[0, 1]`.
+*   :math:`pbest_i`: Personal best position of particle :math:`i`.
+*   :math:`gbest`: Global best position of the swarm.
 
 Genetic Algorithm (GA)
 ----------------------
@@ -44,10 +44,10 @@ Grey Wolf Optimizer (GWO)
 GWO mimics the leadership hierarchy and hunting mechanism of grey wolves.
 
 **Hierarchy:**
-*   $\alpha$ (Alpha): The best solution found so far.
-*   $\beta$ (Beta): The second best solution.
-*   $\delta$ (Delta): The third best solution.
-*   $\omega$ (Omega): The rest of the search agents.
+*   :math:`\alpha` (Alpha): The best solution found so far.
+*   :math:`\beta` (Beta): The second best solution.
+*   :math:`\delta` (Delta): The third best solution.
+*   :math:`\omega` (Omega): The rest of the search agents.
 
 **Position Update:**
 The position of a wolf is updated by averaging the vectors towards the three leaders:
