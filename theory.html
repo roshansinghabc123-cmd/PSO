@@ -112,16 +112,16 @@
 <h3>Rigid Body Parameters (7 Dimensions)<a class="headerlink" href="#rigid-body-parameters-7-dimensions" title="Link to this heading"></a></h3>
 <p>The relative position and orientation of the monomer unit in the stack are described by:</p>
 <ol class="arabic">
-<li><p><strong>Rotation Angle ( :math:`theta` ):</strong> To avoid discontinuities and periodic boundary issues associated with angles (e.g., <span class="math notranslate nohighlight">\(0 \approx 2\pi\)</span>), the rotation is encoded using its sine and cosine components:</p>
+<li><p><strong>Rotation Angle</strong> (<span class="math notranslate nohighlight">\(\theta\)</span>): To avoid discontinuities and periodic boundary issues associated with angles (e.g., <span class="math notranslate nohighlight">\(0 \approx 2\pi\)</span>), the rotation is encoded using its sine and cosine components:</p>
 <div class="math notranslate nohighlight">
 \[c_\theta = \cos(\theta), \quad s_\theta = \sin(\theta)\]</div>
 <p>The optimization algorithms evolve <span class="math notranslate nohighlight">\(c_\theta\)</span> and <span class="math notranslate nohighlight">\(s_\theta\)</span> independently, and the actual angle is reconstructed as <span class="math notranslate nohighlight">\(\theta = \text{atan2}(s_\theta, c_\theta)\)</span>.</p>
 </li>
-<li><p><strong>Translation Vector (:math:`mathbf{T}`):</strong> Three parameters describe the translation of the monomer along the Cartesian axes:</p>
+<li><p><strong>Translation Vector</strong> (<span class="math notranslate nohighlight">\(\mathbf{T}\)</span>): Three parameters describe the translation of the monomer along the Cartesian axes:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{T} = [T_x, T_y, T_z]\]</div>
 </li>
-<li><p><strong>Rotation Center (:math:`mathbf{C}`):</strong> Two parameters define the effective center of rotation in the X-Y plane (perpendicular to the stacking axis, usually Z):</p>
+<li><p><strong>Rotation Center</strong> (<span class="math notranslate nohighlight">\(\mathbf{C}\)</span>): Two parameters define the effective center of rotation in the X-Y plane (perpendicular to the stacking axis, usually Z):</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{C} = [C_x, C_y]\]</div>
 <p>Combined with a fixed <span class="math notranslate nohighlight">\(C_z = 0\)</span>, this allows for off-axis stacking arrangements.</p>
