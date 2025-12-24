@@ -52,17 +52,17 @@ Algorithm Specific Parameters
 
 .. option:: --inertia
 
-   Inertia weight (:math:`\omega`).
+   Inertia weight ( :math:`\omega` ).
    *   Default: ``0.73``
 
 .. option:: --cognitive
 
-   Cognitive coefficient (:math:`c_1`).
+   Cognitive coefficient ( :math:`c_1` ).
    *   Default: ``1.50``
 
 .. option:: --social
 
-   Social coefficient (:math:`c_2`).
+   Social coefficient ( :math:`c_2` ).
    *   Default: ``1.50``
 
 **Genetic Algorithm Options:**
