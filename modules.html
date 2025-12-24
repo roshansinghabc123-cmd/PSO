@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PSO API Reference &mdash; π-Stack Optimizer 1.0 documentation</title>
+  <title>API Reference &mdash; π-Stack Optimizer 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -61,7 +61,166 @@
 <li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input and Output Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">PSO API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.optimizer">Optimizer Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.GA"><code class="docutils literal notranslate"><span class="pre">GA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GA.optimize"><code class="docutils literal notranslate"><span class="pre">GA.optimize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.GAConfig"><code class="docutils literal notranslate"><span class="pre">GAConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.crossover_rate"><code class="docutils literal notranslate"><span class="pre">GAConfig.crossover_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.elite_fraction"><code class="docutils literal notranslate"><span class="pre">GAConfig.elite_fraction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.max_generations"><code class="docutils literal notranslate"><span class="pre">GAConfig.max_generations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.mutation_rate"><code class="docutils literal notranslate"><span class="pre">GAConfig.mutation_rate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.mutation_sigma"><code class="docutils literal notranslate"><span class="pre">GAConfig.mutation_sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.patience"><code class="docutils literal notranslate"><span class="pre">GAConfig.patience</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.population_size"><code class="docutils literal notranslate"><span class="pre">GAConfig.population_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.seed"><code class="docutils literal notranslate"><span class="pre">GAConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.tol"><code class="docutils literal notranslate"><span class="pre">GAConfig.tol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.tournament_size"><code class="docutils literal notranslate"><span class="pre">GAConfig.tournament_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GAConfig.verbose_every"><code class="docutils literal notranslate"><span class="pre">GAConfig.verbose_every</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.GWO"><code class="docutils literal notranslate"><span class="pre">GWO</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWO.optimize"><code class="docutils literal notranslate"><span class="pre">GWO.optimize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.GWOConfig"><code class="docutils literal notranslate"><span class="pre">GWOConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.a_end"><code class="docutils literal notranslate"><span class="pre">GWOConfig.a_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.a_start"><code class="docutils literal notranslate"><span class="pre">GWOConfig.a_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.max_iters"><code class="docutils literal notranslate"><span class="pre">GWOConfig.max_iters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.pack_size"><code class="docutils literal notranslate"><span class="pre">GWOConfig.pack_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.patience"><code class="docutils literal notranslate"><span class="pre">GWOConfig.patience</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.seed"><code class="docutils literal notranslate"><span class="pre">GWOConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.tol"><code class="docutils literal notranslate"><span class="pre">GWOConfig.tol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.GWOConfig.verbose_every"><code class="docutils literal notranslate"><span class="pre">GWOConfig.verbose_every</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.OptimizerHandle"><code class="docutils literal notranslate"><span class="pre">OptimizerHandle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerHandle.config"><code class="docutils literal notranslate"><span class="pre">OptimizerHandle.config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerHandle.method"><code class="docutils literal notranslate"><span class="pre">OptimizerHandle.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerHandle.optimizer"><code class="docutils literal notranslate"><span class="pre">OptimizerHandle.optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerHandle.supports_trajectories"><code class="docutils literal notranslate"><span class="pre">OptimizerHandle.supports_trajectories</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.OptimizerRequest"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerRequest.ga"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest.ga</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerRequest.gwo"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest.gwo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerRequest.method"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerRequest.pso"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest.pso</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.OptimizerRequest.pso_nm"><code class="docutils literal notranslate"><span class="pre">OptimizerRequest.pso_nm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.PSO"><code class="docutils literal notranslate"><span class="pre">PSO</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSO.optimize"><code class="docutils literal notranslate"><span class="pre">PSO.optimize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.PSOConfig"><code class="docutils literal notranslate"><span class="pre">PSOConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.cognitive"><code class="docutils literal notranslate"><span class="pre">PSOConfig.cognitive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.inertia"><code class="docutils literal notranslate"><span class="pre">PSOConfig.inertia</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.max_iters"><code class="docutils literal notranslate"><span class="pre">PSOConfig.max_iters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.patience"><code class="docutils literal notranslate"><span class="pre">PSOConfig.patience</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.print_trajectories"><code class="docutils literal notranslate"><span class="pre">PSOConfig.print_trajectories</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.seed"><code class="docutils literal notranslate"><span class="pre">PSOConfig.seed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.social"><code class="docutils literal notranslate"><span class="pre">PSOConfig.social</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.swarm_size"><code class="docutils literal notranslate"><span class="pre">PSOConfig.swarm_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.tol"><code class="docutils literal notranslate"><span class="pre">PSOConfig.tol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSOConfig.verbose_every"><code class="docutils literal notranslate"><span class="pre">PSOConfig.verbose_every</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.PSONM"><code class="docutils literal notranslate"><span class="pre">PSONM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONM.optimize"><code class="docutils literal notranslate"><span class="pre">PSONM.optimize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.PSONMConfig"><code class="docutils literal notranslate"><span class="pre">PSONMConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_alpha"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_alpha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_gamma"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_gamma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_initial_step"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_initial_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_max_iters"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_max_iters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_rho"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_rho</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_sigma"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_sigma</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.nm_tol"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.nm_tol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.optimizer.PSONMConfig.pso"><code class="docutils literal notranslate"><span class="pre">PSONMConfig.pso</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.create_optimizer"><code class="docutils literal notranslate"><span class="pre">create_optimizer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.describe_method"><code class="docutils literal notranslate"><span class="pre">describe_method()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.optimizer.list_supported_methods"><code class="docutils literal notranslate"><span class="pre">list_supported_methods()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.objective">Objective Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.objective.BatchObjective"><code class="docutils literal notranslate"><span class="pre">BatchObjective</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.objective.BatchObjective.batch_evaluate"><code class="docutils literal notranslate"><span class="pre">BatchObjective.batch_evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.objective.BatchObjective.get_full_torsions_from_best"><code class="docutils literal notranslate"><span class="pre">BatchObjective.get_full_torsions_from_best()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.geometry">Geometry Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.align_bestfit_plane_to_xy"><code class="docutils literal notranslate"><span class="pre">align_bestfit_plane_to_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.align_pi_core_to_xy"><code class="docutils literal notranslate"><span class="pre">align_pi_core_to_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.angle_from_cos_sin_like"><code class="docutils literal notranslate"><span class="pre">angle_from_cos_sin_like()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.apply_transform"><code class="docutils literal notranslate"><span class="pre">apply_transform()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.build_bond_graph"><code class="docutils literal notranslate"><span class="pre">build_bond_graph()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.check_monomer_geometry_sanity"><code class="docutils literal notranslate"><span class="pre">check_monomer_geometry_sanity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.check_topology_preserved"><code class="docutils literal notranslate"><span class="pre">check_topology_preserved()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.clash_penalty"><code class="docutils literal notranslate"><span class="pre">clash_penalty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.intramolecular_clash_penalty"><code class="docutils literal notranslate"><span class="pre">intramolecular_clash_penalty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.geometry.transformation_matrix"><code class="docutils literal notranslate"><span class="pre">transformation_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.torsion">Torsion Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.torsion.SymmetricTorsionMapper"><code class="docutils literal notranslate"><span class="pre">SymmetricTorsionMapper</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.torsion.SymmetricTorsionMapper.expand_torsions"><code class="docutils literal notranslate"><span class="pre">SymmetricTorsionMapper.expand_torsions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.torsion.SymmetricTorsionMapper.torsion_groups"><code class="docutils literal notranslate"><span class="pre">SymmetricTorsionMapper.torsion_groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.torsion.SymmetricTorsionMapper.total_torsions"><code class="docutils literal notranslate"><span class="pre">SymmetricTorsionMapper.total_torsions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.torsion.detect_symmetric_torsions"><code class="docutils literal notranslate"><span class="pre">detect_symmetric_torsions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.torsion.find_fragment_indices"><code class="docutils literal notranslate"><span class="pre">find_fragment_indices()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.torsion.load_torsions_file"><code class="docutils literal notranslate"><span class="pre">load_torsions_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.torsion.rotate_fragment_around_bond"><code class="docutils literal notranslate"><span class="pre">rotate_fragment_around_bond()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.xtb_workers">xTB Worker Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBServer"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBServer.compute_energy"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBServer.compute_energy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBServer.get_performance_stats"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBServer.get_performance_stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBServer.shutdown"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBServer.shutdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBWorkerPool"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBWorkerPool</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBWorkerPool.get_result"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBWorkerPool.get_result()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBWorkerPool.shutdown"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBWorkerPool.shutdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.OptimizedXTBWorkerPool.submit"><code class="docutils literal notranslate"><span class="pre">OptimizedXTBWorkerPool.submit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.ParallelXTBProcessor"><code class="docutils literal notranslate"><span class="pre">ParallelXTBProcessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.ParallelXTBProcessor.compute_energies_parallel"><code class="docutils literal notranslate"><span class="pre">ParallelXTBProcessor.compute_energies_parallel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.ParallelXTBProcessor.get_performance_stats"><code class="docutils literal notranslate"><span class="pre">ParallelXTBProcessor.get_performance_stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.ParallelXTBProcessor.shutdown"><code class="docutils literal notranslate"><span class="pre">ParallelXTBProcessor.shutdown()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.XTBConfig"><code class="docutils literal notranslate"><span class="pre">XTBConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.charge"><code class="docutils literal notranslate"><span class="pre">XTBConfig.charge</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.executable"><code class="docutils literal notranslate"><span class="pre">XTBConfig.executable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.method"><code class="docutils literal notranslate"><span class="pre">XTBConfig.method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.mult"><code class="docutils literal notranslate"><span class="pre">XTBConfig.mult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.prefer_tblite"><code class="docutils literal notranslate"><span class="pre">XTBConfig.prefer_tblite</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modules.xtb_workers.XTBConfig.solvent"><code class="docutils literal notranslate"><span class="pre">XTBConfig.solvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.XTBServer"><code class="docutils literal notranslate"><span class="pre">XTBServer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.XTBWorkerPool"><code class="docutils literal notranslate"><span class="pre">XTBWorkerPool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modules.xtb_workers.optimized_xtb_worker_process"><code class="docutils literal notranslate"><span class="pre">optimized_xtb_worker_process()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.stacking">Stacking Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules.stacking.build_n_layer_stack"><code class="docutils literal notranslate"><span class="pre">build_n_layer_stack()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -78,7 +237,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">PSO API Reference</li>
+      <li class="breadcrumb-item active">API Reference</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,8 +247,628 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="pso-api-reference">
-<h1>PSO API Reference<a class="headerlink" href="#pso-api-reference" title="Link to this heading"></a></h1>
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<section id="module-modules.optimizer">
+<span id="optimizer-module"></span><h2>Optimizer Module<a class="headerlink" href="#module-modules.optimizer" title="Link to this heading"></a></h2>
+<p>Generic optimizer module housing PSO and future algorithms.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.GA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">GA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.optimizer.GAConfig" title="modules.optimizer.GAConfig"><span class="pre">GAConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#GA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GA" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.optimizer.GA.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objective_fn</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#GA.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GA.optimize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">GAConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_generations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_sigma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elite_fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tournament_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Optional[int]'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#GAConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GAConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.crossover_rate">
+<span class="sig-name descname"><span class="pre">crossover_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.8</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.crossover_rate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.elite_fraction">
+<span class="sig-name descname"><span class="pre">elite_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.05</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.elite_fraction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.max_generations">
+<span class="sig-name descname"><span class="pre">max_generations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">500</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.max_generations" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.mutation_rate">
+<span class="sig-name descname"><span class="pre">mutation_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.mutation_rate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.mutation_sigma">
+<span class="sig-name descname"><span class="pre">mutation_sigma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.mutation_sigma" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.patience">
+<span class="sig-name descname"><span class="pre">patience</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.patience" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.population_size">
+<span class="sig-name descname"><span class="pre">population_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.population_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.seed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.tournament_size">
+<span class="sig-name descname"><span class="pre">tournament_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.tournament_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GAConfig.verbose_every">
+<span class="sig-name descname"><span class="pre">verbose_every</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#modules.optimizer.GAConfig.verbose_every" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.GWO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">GWO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.optimizer.GWOConfig" title="modules.optimizer.GWOConfig"><span class="pre">GWOConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#GWO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GWO" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.optimizer.GWO.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objective_fn</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#GWO.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GWO.optimize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">GWOConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a_end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Optional[int]'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#GWOConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.GWOConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.a_end">
+<span class="sig-name descname"><span class="pre">a_end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.a_end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.a_start">
+<span class="sig-name descname"><span class="pre">a_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.a_start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.max_iters">
+<span class="sig-name descname"><span class="pre">max_iters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.max_iters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.pack_size">
+<span class="sig-name descname"><span class="pre">pack_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.pack_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.patience">
+<span class="sig-name descname"><span class="pre">patience</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.patience" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.seed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.GWOConfig.verbose_every">
+<span class="sig-name descname"><span class="pre">verbose_every</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#modules.optimizer.GWOConfig.verbose_every" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerHandle">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">OptimizerHandle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supports_trajectories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#OptimizerHandle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.OptimizerHandle" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Return value with optimizer instance and metadata for logging.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerHandle.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">object</span></em><a class="headerlink" href="#modules.optimizer.OptimizerHandle.config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerHandle.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#modules.optimizer.OptimizerHandle.method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerHandle.optimizer">
+<span class="sig-name descname"><span class="pre">optimizer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">object</span></em><a class="headerlink" href="#modules.optimizer.OptimizerHandle.optimizer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerHandle.supports_trajectories">
+<span class="sig-name descname"><span class="pre">supports_trajectories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#modules.optimizer.OptimizerHandle.supports_trajectories" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">OptimizerRequest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'pso'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pso:</span> <span class="pre">~modules.optimizer.PSOConfig</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ga:</span> <span class="pre">~modules.optimizer.GAConfig</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gwo:</span> <span class="pre">~modules.optimizer.GWOConfig</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pso_nm:</span> <span class="pre">~modules.optimizer.PSONMConfig</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#OptimizerRequest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.OptimizerRequest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Container describing which optimizer the caller wants and its params.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest.ga">
+<span class="sig-name descname"><span class="pre">ga</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#modules.optimizer.GAConfig" title="modules.optimizer.GAConfig"><span class="pre">GAConfig</span></a></em><a class="headerlink" href="#modules.optimizer.OptimizerRequest.ga" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest.gwo">
+<span class="sig-name descname"><span class="pre">gwo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#modules.optimizer.GWOConfig" title="modules.optimizer.GWOConfig"><span class="pre">GWOConfig</span></a></em><a class="headerlink" href="#modules.optimizer.OptimizerRequest.gwo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pso'</span></em><a class="headerlink" href="#modules.optimizer.OptimizerRequest.method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest.pso">
+<span class="sig-name descname"><span class="pre">pso</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#modules.optimizer.PSOConfig" title="modules.optimizer.PSOConfig"><span class="pre">PSOConfig</span></a></em><a class="headerlink" href="#modules.optimizer.OptimizerRequest.pso" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.OptimizerRequest.pso_nm">
+<span class="sig-name descname"><span class="pre">pso_nm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#modules.optimizer.PSONMConfig" title="modules.optimizer.PSONMConfig"><span class="pre">PSONMConfig</span></a></em><a class="headerlink" href="#modules.optimizer.OptimizerRequest.pso_nm" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.PSO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">PSO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.optimizer.PSOConfig" title="modules.optimizer.PSOConfig"><span class="pre">PSOConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#PSO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSO" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.optimizer.PSO.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objective_fn</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#PSO.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSO.optimize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">PSOConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">swarm_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inertia</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.73</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cognitive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">social</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Optional[int]'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_every</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'float'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_trajectories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'bool'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#PSOConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSOConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.cognitive">
+<span class="sig-name descname"><span class="pre">cognitive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.5</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.cognitive" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.inertia">
+<span class="sig-name descname"><span class="pre">inertia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.73</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.inertia" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.max_iters">
+<span class="sig-name descname"><span class="pre">max_iters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.max_iters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.patience">
+<span class="sig-name descname"><span class="pre">patience</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.patience" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.print_trajectories">
+<span class="sig-name descname"><span class="pre">print_trajectories</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.print_trajectories" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.seed">
+<span class="sig-name descname"><span class="pre">seed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.seed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.social">
+<span class="sig-name descname"><span class="pre">social</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.5</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.social" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.swarm_size">
+<span class="sig-name descname"><span class="pre">swarm_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.swarm_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.tol">
+<span class="sig-name descname"><span class="pre">tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSOConfig.verbose_every">
+<span class="sig-name descname"><span class="pre">verbose_every</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#modules.optimizer.PSOConfig.verbose_every" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.PSONM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">PSONM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.optimizer.PSONMConfig" title="modules.optimizer.PSONMConfig"><span class="pre">PSONMConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#PSONM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSONM" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.optimizer.PSONM.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objective_fn</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#PSONM.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSONM.optimize" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">PSONMConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pso:</span> <span class="pre">'PSOConfig'</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_max_iters:</span> <span class="pre">'int'</span> <span class="pre">=</span> <span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_alpha:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_gamma:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_rho:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_sigma:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_initial_step:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nm_tol:</span> <span class="pre">'float'</span> <span class="pre">=</span> <span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/optimizer.html#PSONMConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.PSONMConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_alpha">
+<span class="sig-name descname"><span class="pre">nm_alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_alpha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_gamma">
+<span class="sig-name descname"><span class="pre">nm_gamma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_gamma" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_initial_step">
+<span class="sig-name descname"><span class="pre">nm_initial_step</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.2</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_initial_step" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_max_iters">
+<span class="sig-name descname"><span class="pre">nm_max_iters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">200</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_max_iters" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_rho">
+<span class="sig-name descname"><span class="pre">nm_rho</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.5</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_rho" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_sigma">
+<span class="sig-name descname"><span class="pre">nm_sigma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.5</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_sigma" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.nm_tol">
+<span class="sig-name descname"><span class="pre">nm_tol</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.01</span></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.nm_tol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.optimizer.PSONMConfig.pso">
+<span class="sig-name descname"><span class="pre">pso</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#modules.optimizer.PSOConfig" title="modules.optimizer.PSOConfig"><span class="pre">PSOConfig</span></a></em><a class="headerlink" href="#modules.optimizer.PSONMConfig.pso" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.optimizer.create_optimizer">
+<span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">create_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.optimizer.OptimizerRequest" title="modules.optimizer.OptimizerRequest"><span class="pre">OptimizerRequest</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#modules.optimizer.OptimizerHandle" title="modules.optimizer.OptimizerHandle"><span class="pre">OptimizerHandle</span></a></span></span><a class="reference internal" href="_modules/modules/optimizer.html#create_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.create_optimizer" title="Link to this definition"></a></dt>
+<dd><p>Instantiate the requested optimizer and expose metadata.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.optimizer.describe_method">
+<span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">describe_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#describe_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.describe_method" title="Link to this definition"></a></dt>
+<dd><p>Return a human-readable method label if available.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.optimizer.list_supported_methods">
+<span class="sig-prename descclassname"><span class="pre">modules.optimizer.</span></span><span class="sig-name descname"><span class="pre">list_supported_methods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/optimizer.html#list_supported_methods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.optimizer.list_supported_methods" title="Link to this definition"></a></dt>
+<dd><p>Return optimizer method keys that callers can expose via CLI selections.</p>
+</dd></dl>
+
+</section>
+<section id="module-modules.objective">
+<span id="objective-function"></span><h2>Objective Function<a class="headerlink" href="#module-modules.objective" title="Link to this heading"></a></h2>
+<p>Batch objective used by the optimizer.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.objective.BatchObjective">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.objective.</span></span><span class="sig-name descname"><span class="pre">BatchObjective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monomer_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">torsions_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clash_cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intramol_penalty_weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intramol_cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">torsion_mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.torsion.SymmetricTorsionMapper" title="modules.torsion.SymmetricTorsionMapper"><span class="pre">SymmetricTorsionMapper</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direct_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/objective.html#BatchObjective"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.objective.BatchObjective" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.objective.BatchObjective.batch_evaluate">
+<span class="sig-name descname"><span class="pre">batch_evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/objective.html#BatchObjective.batch_evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.objective.BatchObjective.batch_evaluate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.objective.BatchObjective.get_full_torsions_from_best">
+<span class="sig-name descname"><span class="pre">get_full_torsions_from_best</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/objective.html#BatchObjective.get_full_torsions_from_best"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.objective.BatchObjective.get_full_torsions_from_best" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-modules.geometry">
+<span id="geometry-utilities"></span><h2>Geometry Utilities<a class="headerlink" href="#module-modules.geometry" title="Link to this heading"></a></h2>
+<p>Geometry utilities for π-stack construction and validation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.align_bestfit_plane_to_xy">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">align_bestfit_plane_to_xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">select</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#align_bestfit_plane_to_xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.align_bestfit_plane_to_xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.align_pi_core_to_xy">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">align_pi_core_to_xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#align_pi_core_to_xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.align_pi_core_to_xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.angle_from_cos_sin_like">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">angle_from_cos_sin_like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c_like</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_like</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#angle_from_cos_sin_like"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.angle_from_cos_sin_like" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.apply_transform">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">apply_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#apply_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.apply_transform" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.build_bond_graph">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">build_bond_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/geometry.html#build_bond_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.build_bond_graph" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.check_monomer_geometry_sanity">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">check_monomer_geometry_sanity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bonded_cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nonbonded_cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/geometry.html#check_monomer_geometry_sanity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.check_monomer_geometry_sanity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.check_topology_preserved">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">check_topology_preserved</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance_buffer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#check_topology_preserved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.check_topology_preserved" title="Link to this definition"></a></dt>
+<dd><p>Check if molecular connectivity is preserved after torsion changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords</strong> – Current atomic coordinates</p></li>
+<li><p><strong>atom_types</strong> – List of atom type strings</p></li>
+<li><p><strong>reference_graph</strong> – Reference bond graph from initial geometry</p></li>
+<li><p><strong>tolerance_buffer</strong> – Additional tolerance (in Angstroms) added to bond detection
+to avoid false positives from numerical noise</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if topology changed (bonds formed/broken), False if preserved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.clash_penalty">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">clash_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#clash_penalty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.clash_penalty" title="Link to this definition"></a></dt>
+<dd><p>Optimized clash penalty calculation with early termination.</p>
+<p>Uses cKDTree for O(n log n) performance on large systems if scipy is available,
+otherwise falls back to vectorized O(n²) approach.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.intramolecular_clash_penalty">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">intramolecular_clash_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#intramolecular_clash_penalty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.intramolecular_clash_penalty" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.geometry.transformation_matrix">
+<span class="sig-prename descclassname"><span class="pre">modules.geometry.</span></span><span class="sig-name descname"><span class="pre">transformation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/geometry.html#transformation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.geometry.transformation_matrix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-modules.torsion">
+<span id="torsion-handling"></span><h2>Torsion Handling<a class="headerlink" href="#module-modules.torsion" title="Link to this heading"></a></h2>
+<p>Torsion handling, detection, and mapping utilities.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.torsion.SymmetricTorsionMapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.torsion.</span></span><span class="sig-name descname"><span class="pre">SymmetricTorsionMapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">torsion_groups</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'List[List[Dict[str,</span> <span class="pre">Any]]]'</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_torsions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/torsion.html#SymmetricTorsionMapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.SymmetricTorsionMapper" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.torsion.SymmetricTorsionMapper.expand_torsions">
+<span class="sig-name descname"><span class="pre">expand_torsions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reduced_taus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/torsion.html#SymmetricTorsionMapper.expand_torsions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.SymmetricTorsionMapper.expand_torsions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.torsion.SymmetricTorsionMapper.torsion_groups">
+<span class="sig-name descname"><span class="pre">torsion_groups</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.torsion.SymmetricTorsionMapper.torsion_groups" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.torsion.SymmetricTorsionMapper.total_torsions">
+<span class="sig-name descname"><span class="pre">total_torsions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#modules.torsion.SymmetricTorsionMapper.total_torsions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.torsion.detect_symmetric_torsions">
+<span class="sig-prename descclassname"><span class="pre">modules.torsion.</span></span><span class="sig-name descname"><span class="pre">detect_symmetric_torsions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">torsions_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/torsion.html#detect_symmetric_torsions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.detect_symmetric_torsions" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.torsion.find_fragment_indices">
+<span class="sig-prename descclassname"><span class="pre">modules.torsion.</span></span><span class="sig-name descname"><span class="pre">find_fragment_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bond_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_atom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/torsion.html#find_fragment_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.find_fragment_indices" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.torsion.load_torsions_file">
+<span class="sig-prename descclassname"><span class="pre">modules.torsion.</span></span><span class="sig-name descname"><span class="pre">load_torsions_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/modules/torsion.html#load_torsions_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.load_torsions_file" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.torsion.rotate_fragment_around_bond">
+<span class="sig-prename descclassname"><span class="pre">modules.torsion.</span></span><span class="sig-name descname"><span class="pre">rotate_fragment_around_bond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom_c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fragment_indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="_modules/modules/torsion.html#rotate_fragment_around_bond"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.torsion.rotate_fragment_around_bond" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-modules.xtb_workers">
+<span id="xtb-worker-management"></span><h2>xTB Worker Management<a class="headerlink" href="#module-modules.xtb_workers" title="Link to this heading"></a></h2>
+<p>Final optimized xTB workers combining all working optimizations from Steps 1-3.
+Focuses on optimizations that work with the current xTB version.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">OptimizedXTBServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.xtb_workers.XTBConfig" title="modules.xtb_workers.XTBConfig"><span class="pre">XTBConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_cache_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBServer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Highly optimized xTB server combining all working optimizations:
+- Enhanced caching with smart coordinate rounding and LRU eviction
+- Optimized subprocess calls with reused working directories
+- Better error handling and timeouts
+- Performance monitoring
+- Memory-efficient coordinate handling with bounded cache</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBServer.compute_energy">
+<span class="sig-name descname"><span class="pre">compute_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBServer.compute_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBServer.compute_energy" title="Link to this definition"></a></dt>
+<dd><p>Optimized energy computation with enhanced caching.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBServer.get_performance_stats">
+<span class="sig-name descname"><span class="pre">get_performance_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBServer.get_performance_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBServer.get_performance_stats" title="Link to this definition"></a></dt>
+<dd><p>Get detailed performance statistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBServer.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBServer.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBServer.shutdown" title="Link to this definition"></a></dt>
+<dd><p>Clean up with performance reporting.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBWorkerPool">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">OptimizedXTBWorkerPool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtb_cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.xtb_workers.XTBConfig" title="modules.xtb_workers.XTBConfig"><span class="pre">XTBConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBWorkerPool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBWorkerPool" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Optimized worker pool using the enhanced XTB servers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBWorkerPool.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBWorkerPool.get_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBWorkerPool.get_result" title="Link to this definition"></a></dt>
+<dd><p>Get result from worker.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBWorkerPool.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBWorkerPool.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBWorkerPool.shutdown" title="Link to this definition"></a></dt>
+<dd><p>Shutdown worker pool.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.OptimizedXTBWorkerPool.submit">
+<span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#OptimizedXTBWorkerPool.submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.OptimizedXTBWorkerPool.submit" title="Link to this definition"></a></dt>
+<dd><p>Submit task for processing.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.xtb_workers.ParallelXTBProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">ParallelXTBProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#modules.xtb_workers.XTBConfig" title="modules.xtb_workers.XTBConfig"><span class="pre">XTBConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_cache_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#ParallelXTBProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.ParallelXTBProcessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Step 3 optimization: Parallel processing of multiple xTB calculations.
+Uses ThreadPoolExecutor for efficient parallel execution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.ParallelXTBProcessor.compute_energies_parallel">
+<span class="sig-name descname"><span class="pre">compute_energies_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecules_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#ParallelXTBProcessor.compute_energies_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.ParallelXTBProcessor.compute_energies_parallel" title="Link to this definition"></a></dt>
+<dd><p>Compute multiple energies in parallel using ThreadPoolExecutor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.ParallelXTBProcessor.get_performance_stats">
+<span class="sig-name descname"><span class="pre">get_performance_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/modules/xtb_workers.html#ParallelXTBProcessor.get_performance_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.ParallelXTBProcessor.get_performance_stats" title="Link to this definition"></a></dt>
+<dd><p>Get performance statistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.xtb_workers.ParallelXTBProcessor.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#ParallelXTBProcessor.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.ParallelXTBProcessor.shutdown" title="Link to this definition"></a></dt>
+<dd><p>Clean up with performance reporting.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">XTBConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mult</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'gfn2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'str'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'xtb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solvent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Optional[str]'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefer_tblite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'bool'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#XTBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.XTBConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.charge">
+<span class="sig-name descname"><span class="pre">charge</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.charge" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.executable">
+<span class="sig-name descname"><span class="pre">executable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'xtb'</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.executable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.method">
+<span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gfn2'</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.mult">
+<span class="sig-name descname"><span class="pre">mult</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.mult" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.prefer_tblite">
+<span class="sig-name descname"><span class="pre">prefer_tblite</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.prefer_tblite" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBConfig.solvent">
+<span class="sig-name descname"><span class="pre">solvent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#modules.xtb_workers.XTBConfig.solvent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBServer">
+<span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">XTBServer</span></span><a class="headerlink" href="#modules.xtb_workers.XTBServer" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#modules.xtb_workers.OptimizedXTBServer" title="modules.xtb_workers.OptimizedXTBServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizedXTBServer</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.xtb_workers.XTBWorkerPool">
+<span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">XTBWorkerPool</span></span><a class="headerlink" href="#modules.xtb_workers.XTBWorkerPool" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#modules.xtb_workers.OptimizedXTBWorkerPool" title="modules.xtb_workers.OptimizedXTBWorkerPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptimizedXTBWorkerPool</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.xtb_workers.optimized_xtb_worker_process">
+<span class="sig-prename descclassname"><span class="pre">modules.xtb_workers.</span></span><span class="sig-name descname"><span class="pre">optimized_xtb_worker_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">worker_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xtb_cfg_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/modules/xtb_workers.html#optimized_xtb_worker_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.xtb_workers.optimized_xtb_worker_process" title="Link to this definition"></a></dt>
+<dd><p>Optimized worker process using enhanced XTB server.</p>
+</dd></dl>
+
+</section>
+<section id="module-modules.stacking">
+<span id="stacking-utilities"></span><h2>Stacking Utilities<a class="headerlink" href="#module-modules.stacking" title="Link to this heading"></a></h2>
+<p>Stack construction utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.stacking.build_n_layer_stack">
+<span class="sig-prename descclassname"><span class="pre">modules.stacking.</span></span><span class="sig-name descname"><span class="pre">build_n_layer_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atom_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monomer_coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span></span></span><a class="reference internal" href="_modules/modules/stacking.html#build_n_layer_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#modules.stacking.build_n_layer_stack" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
 </section>
 
 

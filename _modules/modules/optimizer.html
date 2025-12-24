@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>modules.optimizer &mdash; π-Stack Optimizer 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f52818fb" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            π-Stack Optimizer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../inputs_outputs.html">Input and Output Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../optimization.html">Optimization Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">π-Stack Optimizer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">modules.optimizer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for modules.optimizer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Generic optimizer module housing PSO and future algorithms.&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">modules.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">IDX</span><span class="p">,</span> <span class="n">PARAM_NAMES</span>
+
+
+<span class="c1"># Parameter bounds to prevent optimizer from exploring unphysical regions</span>
+<span class="c1"># These keep the search space reasonable for molecular stacking</span>
+<span class="n">PARAM_BOUNDS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cos_like&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="s2">&quot;sin_like&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="s2">&quot;Tx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+    <span class="s2">&quot;Ty&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+    <span class="s2">&quot;Tz&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">),</span>
+    <span class="s2">&quot;Cx&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+    <span class="s2">&quot;Cy&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_METHODS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;pso&quot;</span><span class="p">:</span> <span class="s2">&quot;Particle Swarm Optimization&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ga&quot;</span><span class="p">:</span> <span class="s2">&quot;Genetic Algorithm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gwo&quot;</span><span class="p">:</span> <span class="s2">&quot;Grey Wolf Optimizer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pso-nm&quot;</span><span class="p">:</span> <span class="s2">&quot;PSO + Nelder-Mead&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="list_supported_methods">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.list_supported_methods">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_supported_methods</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return optimizer method keys that callers can expose via CLI selections.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">SUPPORTED_METHODS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="describe_method">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.describe_method">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">describe_method</span><span class="p">(</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a human-readable method label if available.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">SUPPORTED_METHODS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">method</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_clamp_positions</span><span class="p">(</span><span class="n">P</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enforce parameter bounds to keep optimizer in physically reasonable space.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="ow">in</span> <span class="n">PARAM_BOUNDS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">IDX</span> <span class="ow">and</span> <span class="n">IDX</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">IDX</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span>
+            <span class="n">P</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">],</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+    <span class="c1"># Clamp torsion angles (parameters beyond standard transform parameters) to [-2π, 2π]</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">PARAM_NAMES</span><span class="p">):</span>
+        <span class="n">torsion_start</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">PARAM_NAMES</span><span class="p">)</span>
+        <span class="n">P</span><span class="p">[:,</span> <span class="n">torsion_start</span><span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">P</span><span class="p">[:,</span> <span class="n">torsion_start</span><span class="p">:],</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">P</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_initialize_positions</span><span class="p">(</span><span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">count</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;cos_like&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+        <span class="n">P</span><span class="p">[:,</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;cos_like&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;sin_like&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+        <span class="n">P</span><span class="p">[:,</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;sin_like&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">sd</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;Tx&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Ty&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Cx&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Cy&quot;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)]:</span>
+        <span class="k">if</span> <span class="n">IDX</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+            <span class="n">P</span><span class="p">[:,</span> <span class="n">IDX</span><span class="p">[</span><span class="n">name</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;Tz&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+        <span class="n">P</span><span class="p">[:,</span> <span class="n">IDX</span><span class="p">[</span><span class="s2">&quot;Tz&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">PARAM_NAMES</span><span class="p">):</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="n">dim</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">PARAM_NAMES</span><span class="p">)</span>
+        <span class="n">P</span><span class="p">[:,</span> <span class="nb">len</span><span class="p">(</span><span class="n">PARAM_NAMES</span><span class="p">)</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">extra</span><span class="p">))</span>
+    <span class="c1"># Clamp initial positions to bounds</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">_clamp_positions</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">P</span>
+
+
+<div class="viewcode-block" id="PSOConfig">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSOConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PSOConfig</span><span class="p">:</span>
+    <span class="n">swarm_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">max_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">inertia</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.73</span>
+    <span class="n">cognitive</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.50</span>
+    <span class="n">social</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.50</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">verbose_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">print_trajectories</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="PSO">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSO">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PSO</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">PSOConfig</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="PSO.optimize">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSO.optimize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">_initialize_positions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">swarm_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+        <span class="n">pbest</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">pbest_val</span> <span class="o">=</span> <span class="n">fitness</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">g_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">pbest_val</span><span class="p">)</span>
+        <span class="n">gbest</span> <span class="o">=</span> <span class="n">pbest</span><span class="p">[</span><span class="n">g_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">gbest_val</span> <span class="o">=</span> <span class="n">pbest_val</span><span class="p">[</span><span class="n">g_idx</span><span class="p">]</span>
+        <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">gbest_val</span><span class="p">]</span>
+        <span class="n">iter_delta</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">max_iters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">inertia</span> <span class="o">*</span> <span class="n">V</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">cognitive</span> <span class="o">*</span> <span class="n">r1</span> <span class="o">*</span> <span class="p">(</span><span class="n">pbest</span> <span class="o">-</span> <span class="n">P</span><span class="p">)</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">social</span> <span class="o">*</span> <span class="n">r2</span> <span class="o">*</span> <span class="p">(</span><span class="n">gbest</span> <span class="o">-</span> <span class="n">P</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="n">P</span> <span class="o">+</span> <span class="n">V</span>
+            <span class="c1"># Clamp positions to bounds after update</span>
+            <span class="n">P</span> <span class="o">=</span> <span class="n">_clamp_positions</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+            <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+            <span class="n">improved</span> <span class="o">=</span> <span class="n">fitness</span> <span class="o">&lt;</span> <span class="n">pbest_val</span>
+            <span class="n">pbest</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span>
+            <span class="n">pbest_val</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">[</span><span class="n">improved</span><span class="p">]</span>
+            <span class="n">g_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">pbest_val</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">gbest_val</span> <span class="o">-</span> <span class="n">pbest_val</span><span class="p">[</span><span class="n">g_idx</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="n">gbest_val</span> <span class="o">=</span> <span class="n">pbest_val</span><span class="p">[</span><span class="n">g_idx</span><span class="p">]</span>
+                <span class="n">gbest</span> <span class="o">=</span> <span class="n">pbest</span><span class="p">[</span><span class="n">g_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">patience_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">best_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gbest_val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gbest_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gbest_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="ow">and</span> <span class="p">(</span><span class="n">it</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[PSO]  iter    best          Δ_patience&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;[PSO]  </span><span class="si">{</span><span class="n">it</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">gbest_val</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">iter_delta</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">print_trajectories</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">swarm_size</span><span class="p">):</span>
+                        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">it</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span> <span class="o">+</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="n">fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                    <span class="n">g_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">it</span><span class="p">,</span> <span class="s2">&quot;global_best&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span> <span class="o">+</span> <span class="n">gbest</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="n">gbest_val</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">patience_counter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                    <span class="n">improvement</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span> <span class="o">-</span> <span class="n">gbest_val</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">improvement</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[PSO] Early stopping at iter </span><span class="si">{</span><span class="n">it</span><span class="si">}</span><span class="s2">: no improvement for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="si">}</span><span class="s2"> iterations&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">break</span>
+        <span class="k">if</span> <span class="n">best_history</span><span class="p">:</span>
+            <span class="n">ref_index</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">reference_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="n">ref_index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gbest_val</span> <span class="o">-</span> <span class="n">reference_val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">gbest</span><span class="p">,</span> <span class="n">gbest_val</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="GAConfig">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GAConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GAConfig</span><span class="p">:</span>
+    <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">max_generations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">mutation_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.10</span>
+    <span class="n">mutation_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.30</span>
+    <span class="n">crossover_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.80</span>
+    <span class="n">elite_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">tournament_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">verbose_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span></div>
+
+
+
+<div class="viewcode-block" id="GA">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GA">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GA</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">GAConfig</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="GA.optimize">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GA.optimize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="n">_initialize_positions</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
+        <span class="p">)</span>
+        <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">))</span>
+        <span class="n">best_params</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">best_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fitness</span><span class="p">[</span><span class="n">best_idx</span><span class="p">])</span>
+        <span class="n">elite_fraction</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">elite_fraction</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">elite_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">elite_fraction</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">))</span>
+        <span class="n">elite_count</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">elite_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">)</span>
+        
+        <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">best_val</span><span class="p">]</span>
+        <span class="n">iter_delta</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">generation</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">max_generations</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">elite_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">fitness</span><span class="p">)[:</span><span class="n">elite_count</span><span class="p">]</span>
+            <span class="n">elites</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">elite_indices</span><span class="p">]</span>
+            <span class="n">new_population</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+            <span class="n">new_population</span><span class="p">[:</span><span class="n">elite_count</span><span class="p">]</span> <span class="o">=</span> <span class="n">elites</span>
+
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">elite_count</span>
+            <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">:</span>
+                <span class="n">parent_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tournament_select</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+                <span class="n">parent_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tournament_select</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crossover</span><span class="p">(</span><span class="n">parent_a</span><span class="p">,</span> <span class="n">parent_b</span><span class="p">)</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+                <span class="n">new_population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span>
+                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">population</span> <span class="o">=</span> <span class="n">new_population</span>
+            <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">population</span><span class="p">)</span>
+            <span class="n">current_best_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">))</span>
+            <span class="n">current_best_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fitness</span><span class="p">[</span><span class="n">current_best_idx</span><span class="p">])</span>
+            
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">best_val</span> <span class="o">-</span> <span class="n">current_best_val</span>
+            <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="n">best_val</span> <span class="o">=</span> <span class="n">current_best_val</span>
+                <span class="n">best_params</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">current_best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_best_val</span> <span class="o">&lt;</span> <span class="n">best_val</span><span class="p">:</span>
+                    <span class="n">best_val</span> <span class="o">=</span> <span class="n">current_best_val</span>
+                    <span class="n">best_params</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">current_best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">patience_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="n">best_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_val</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="ow">and</span> <span class="n">generation</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GA]   gen    best          Δ_patience&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GA]  </span><span class="si">{</span><span class="n">generation</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">best_val</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">iter_delta</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">patience_counter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                    <span class="n">improvement</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span> <span class="o">-</span> <span class="n">best_val</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">improvement</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[GA] Early stopping at gen </span><span class="si">{</span><span class="n">generation</span><span class="si">}</span><span class="s2">: no improvement for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="si">}</span><span class="s2"> generations&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">break</span>
+        
+        <span class="k">if</span> <span class="n">best_history</span><span class="p">:</span>
+            <span class="n">ref_index</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">reference_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="n">ref_index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_val</span> <span class="o">-</span> <span class="n">reference_val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">best_val</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tournament_select</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">population</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tournament_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">)</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">participants</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">population_size</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="n">participants</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">fitness</span><span class="p">[</span><span class="n">participants</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="n">population</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">parent_b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">crossover_rate</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parent_a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">parent_a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">parent_a</span><span class="p">[:</span><span class="n">point</span><span class="p">],</span> <span class="n">parent_b</span><span class="p">[</span><span class="n">point</span><span class="p">:]))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">mutation_rate</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">child</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">mutation_sigma</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">child</span></div>
+
+
+
+<div class="viewcode-block" id="GWOConfig">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GWOConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GWOConfig</span><span class="p">:</span>
+    <span class="n">pack_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">max_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">a_start</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">a_end</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">verbose_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">patience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span></div>
+
+
+
+<div class="viewcode-block" id="GWO">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GWO">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GWO</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">GWOConfig</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="GWO.optimize">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.GWO.optimize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">pack_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">pack_size</span><span class="p">)</span>
+        <span class="n">wolves</span> <span class="o">=</span> <span class="n">_initialize_positions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="p">,</span> <span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+        <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">wolves</span><span class="p">)</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">alpha_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_leaders</span><span class="p">(</span><span class="n">wolves</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+        
+        <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">alpha_val</span><span class="p">]</span>
+        <span class="n">iter_delta</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">max_iters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_a</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+            <span class="n">wolves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_positions</span><span class="p">(</span><span class="n">wolves</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">fitness</span> <span class="o">=</span> <span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">wolves</span><span class="p">)</span>
+            <span class="n">prev_alpha_val</span> <span class="o">=</span> <span class="n">alpha_val</span>
+            <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">alpha_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_leaders</span><span class="p">(</span><span class="n">wolves</span><span class="p">,</span> <span class="n">fitness</span><span class="p">)</span>
+            
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">prev_alpha_val</span> <span class="o">-</span> <span class="n">alpha_val</span>
+            <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="n">patience_counter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">patience_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="n">best_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">alpha_val</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">alpha_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ref_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">iter_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">alpha_val</span> <span class="o">-</span> <span class="n">ref_val</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="ow">and</span> <span class="n">iteration</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">verbose_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GWO]  iter    best          Δ_patience&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_header_printed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GWO]  </span><span class="si">{</span><span class="n">iteration</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">alpha_val</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">iter_delta</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">patience_counter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">:</span>
+                    <span class="n">improvement</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">best_history</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="p">]</span> <span class="o">-</span> <span class="n">alpha_val</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">improvement</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;[GWO] Early stopping at iter </span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2">: no improvement for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span><span class="si">}</span><span class="s2"> iterations&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">break</span>
+        
+        <span class="k">if</span> <span class="n">best_history</span><span class="p">:</span>
+            <span class="n">ref_index</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best_history</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">patience</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="n">reference_val</span> <span class="o">=</span> <span class="n">best_history</span><span class="p">[</span><span class="n">ref_index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">alpha_val</span> <span class="o">-</span> <span class="n">reference_val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">alpha</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">alpha_val</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iteration</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">max_iters</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">a_end</span>
+        <span class="n">frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">iteration</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">max_iters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">a_start</span> <span class="o">+</span> <span class="n">frac</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">a_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">a_start</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_positions</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">wolves</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">beta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">delta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">pack_size</span> <span class="o">=</span> <span class="n">wolves</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">alpha_vec</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">beta_vec</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">delta_vec</span> <span class="o">=</span> <span class="n">delta</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="n">A1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span> <span class="o">-</span> <span class="n">a</span>
+        <span class="n">C1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">alpha_vec</span> <span class="o">-</span> <span class="n">A1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">C1</span> <span class="o">*</span> <span class="n">alpha_vec</span> <span class="o">-</span> <span class="n">wolves</span><span class="p">)</span>
+
+        <span class="n">A2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span> <span class="o">-</span> <span class="n">a</span>
+        <span class="n">C2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">beta_vec</span> <span class="o">-</span> <span class="n">A2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">C2</span> <span class="o">*</span> <span class="n">beta_vec</span> <span class="o">-</span> <span class="n">wolves</span><span class="p">)</span>
+
+        <span class="n">A3</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span> <span class="o">-</span> <span class="n">a</span>
+        <span class="n">C3</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">pack_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+        <span class="n">X3</span> <span class="o">=</span> <span class="n">delta_vec</span> <span class="o">-</span> <span class="n">A3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">C3</span> <span class="o">*</span> <span class="n">delta_vec</span> <span class="o">-</span> <span class="n">wolves</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">X1</span> <span class="o">+</span> <span class="n">X2</span> <span class="o">+</span> <span class="n">X3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">3.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_leaders</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wolves</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+        <span class="n">alpha_idx</span> <span class="o">=</span> <span class="n">sorted_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">beta_idx</span> <span class="o">=</span> <span class="n">sorted_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">alpha_idx</span>
+        <span class="n">delta_idx</span> <span class="o">=</span> <span class="n">sorted_idx</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">beta_idx</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">wolves</span><span class="p">[</span><span class="n">alpha_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">wolves</span><span class="p">[</span><span class="n">beta_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">wolves</span><span class="p">[</span><span class="n">delta_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">fitness</span><span class="p">[</span><span class="n">alpha_idx</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="PSONMConfig">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSONMConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PSONMConfig</span><span class="p">:</span>
+    <span class="n">pso</span><span class="p">:</span> <span class="n">PSOConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">PSOConfig</span><span class="p">)</span>
+    <span class="n">nm_max_iters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">nm_alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">nm_gamma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">nm_rho</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.50</span>
+    <span class="n">nm_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.50</span>
+    <span class="n">nm_initial_step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.20</span>
+    <span class="n">nm_tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span></div>
+
+
+
+<div class="viewcode-block" id="PSONM">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSONM">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PSONM</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">PSONMConfig</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">cfg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pso</span> <span class="o">=</span> <span class="n">PSO</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">pso</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="PSONM.optimize">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.PSONM.optimize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pso</span><span class="o">.</span><span class="n">trajectory_writer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_writer</span>
+        <span class="n">best_params</span><span class="p">,</span> <span class="n">best_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pso</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_patience_delta</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pso</span><span class="p">,</span> <span class="s2">&quot;last_patience_delta&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">refined_params</span><span class="p">,</span> <span class="n">refined_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nelder_mead</span><span class="p">(</span><span class="n">best_params</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">refined_val</span> <span class="o">&lt;</span> <span class="n">best_val</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">refined_params</span><span class="p">,</span> <span class="n">refined_val</span>
+        <span class="k">return</span> <span class="n">best_params</span><span class="p">,</span> <span class="n">best_val</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_nelder_mead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">objective_fn</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+        <span class="n">simplex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+        <span class="n">simplex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_initial_step</span> <span class="ow">or</span> <span class="mf">1e-1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+            <span class="n">vertex</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">vertex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">step</span> <span class="k">if</span> <span class="n">vertex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">step</span>
+            <span class="n">simplex</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">simplex</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_max_iters</span><span class="p">)):</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="n">simplex</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[</span><span class="n">order</span><span class="p">]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">order</span><span class="p">]</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">best_val</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">worst</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">second_worst</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_tol</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">centroid</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">reflected</span> <span class="o">=</span> <span class="n">centroid</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">centroid</span> <span class="o">-</span> <span class="n">worst</span><span class="p">)</span>
+            <span class="n">refl_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">reflected</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">refl_val</span> <span class="o">&lt;</span> <span class="n">best_val</span><span class="p">:</span>
+                <span class="n">expanded</span> <span class="o">=</span> <span class="n">centroid</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">reflected</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">)</span>
+                <span class="n">exp_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">expanded</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">exp_val</span> <span class="o">&lt;</span> <span class="n">refl_val</span><span class="p">:</span>
+                    <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">expanded</span>
+                    <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">exp_val</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reflected</span>
+                    <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">refl_val</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">refl_val</span> <span class="o">&lt;</span> <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reflected</span>
+                <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">refl_val</span>
+                <span class="k">continue</span>
+
+            <span class="n">contracted</span> <span class="o">=</span> <span class="n">centroid</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_rho</span> <span class="o">*</span> <span class="p">(</span><span class="n">worst</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">)</span>
+            <span class="n">con_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">contracted</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">con_val</span> <span class="o">&lt;</span> <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">simplex</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">contracted</span>
+                <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_val</span>
+                <span class="k">continue</span>
+
+            <span class="n">simplex</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">simplex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">nm_sigma</span> <span class="o">*</span> <span class="p">(</span><span class="n">simplex</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">simplex</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">simplex</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">simplex</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">best_idx</span><span class="p">])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_eval_point</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">objective_fn</span><span class="o">.</span><span class="n">batch_evaluate</span><span class="p">(</span><span class="n">arr</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="OptimizerRequest">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.OptimizerRequest">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptimizerRequest</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container describing which optimizer the caller wants and its params.&quot;&quot;&quot;</span>
+
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pso&quot;</span>
+    <span class="n">pso</span><span class="p">:</span> <span class="n">PSOConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">PSOConfig</span><span class="p">)</span>
+    <span class="n">ga</span><span class="p">:</span> <span class="n">GAConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">GAConfig</span><span class="p">)</span>
+    <span class="n">gwo</span><span class="p">:</span> <span class="n">GWOConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">GWOConfig</span><span class="p">)</span>
+    <span class="n">pso_nm</span><span class="p">:</span> <span class="n">PSONMConfig</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">PSONMConfig</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OptimizerHandle">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.OptimizerHandle">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptimizerHandle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return value with optimizer instance and metadata for logging.&quot;&quot;&quot;</span>
+
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">optimizer</span><span class="p">:</span> <span class="nb">object</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">object</span>
+    <span class="n">supports_trajectories</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="create_optimizer">
+<a class="viewcode-back" href="../../modules.html#modules.optimizer.create_optimizer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_optimizer</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">OptimizerRequest</span><span class="p">,</span> <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OptimizerHandle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Instantiate the requested optimizer and expose metadata.&quot;&quot;&quot;</span>
+
+    <span class="n">method_key</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">method_key</span> <span class="o">==</span> <span class="s2">&quot;pso&quot;</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PSO</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">pso</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OptimizerHandle</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pso&quot;</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">pso</span><span class="p">,</span>
+            <span class="n">supports_trajectories</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">pso</span><span class="o">.</span><span class="n">print_trajectories</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">method_key</span> <span class="o">==</span> <span class="s2">&quot;ga&quot;</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">GA</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">ga</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OptimizerHandle</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ga&quot;</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">ga</span><span class="p">,</span>
+            <span class="n">supports_trajectories</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">method_key</span> <span class="o">==</span> <span class="s2">&quot;gwo&quot;</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">GWO</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">gwo</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OptimizerHandle</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gwo&quot;</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">gwo</span><span class="p">,</span>
+            <span class="n">supports_trajectories</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">method_key</span> <span class="o">==</span> <span class="s2">&quot;pso-nm&quot;</span><span class="p">:</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PSONM</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">pso_nm</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OptimizerHandle</span><span class="p">(</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;pso-nm&quot;</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">pso_nm</span><span class="p">,</span>
+            <span class="n">supports_trajectories</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">pso_nm</span><span class="o">.</span><span class="n">pso</span><span class="o">.</span><span class="n">print_trajectories</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="n">supported</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">list_supported_methods</span><span class="p">())</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported optimizer &#39;</span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39;. Supported: </span><span class="si">{</span><span class="n">supported</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arunima Ghosh, Susmita Barik, Roshan J. Singh, Sandeep K. Reddy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
