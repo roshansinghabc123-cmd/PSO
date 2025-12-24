@@ -1,0 +1,126 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}%
+\contentsline {paragraph}{Pending note}{4}{section.1}%
+\contentsline {section}{\numberline {2}Getting Started}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Installation}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Step 1: Clone the Repository}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Step 2: Create Python Virtual Environment}{5}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Step 3: Install Python Dependencies}{5}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Step 4: Enable CLI Wrappers (Recommended)}{5}{subsubsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.5}Step 5: Configure xTB Backend}{5}{subsubsection.2.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.6}Step 6: Validate Installation}{5}{subsubsection.2.1.6}%
+\contentsline {subsection}{\numberline {2.2}Quick Start: Your First Optimization}{6}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Basic Usage}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Input File Format}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Common Workflows}{7}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Basic Rigid Monomer Optimization}{7}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Optimization with Torsional Flexibility}{7}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Using Symmetry Detection}{7}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}High-Accuracy Optimization}{7}{subsubsection.3.2.4}%
+\contentsline {subsubsection}{\numberline {3.2.5}Comparing Multiple Algorithms}{8}{subsubsection.3.2.5}%
+\contentsline {subsection}{\numberline {3.3}Understanding Output}{8}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Console Output}{8}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Result Files}{8}{subsubsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.4}Tips for Effective Optimization}{9}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Command-Line Reference}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Synopsis}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Required Arguments}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}General Options}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}xTB Backend Options}{9}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Torsion and Symmetry Options}{9}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Penalty Function Options}{10}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}PSO-Specific Options}{10}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Genetic Algorithm Options}{10}{subsection.4.8}%
+\contentsline {subsection}{\numberline {4.9}Grey Wolf Optimizer Options}{10}{subsection.4.9}%
+\contentsline {subsection}{\numberline {4.10}PSO+Nelder-Mead Hybrid Options}{11}{subsection.4.10}%
+\contentsline {subsection}{\numberline {4.11}Getting Help}{11}{subsection.4.11}%
+\contentsline {section}{\numberline {5}Workflow Overview}{11}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Conceptual Pipeline}{11}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Technical Details}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Software Architecture}{12}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Module Responsibilities}{13}{subsubsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.2}Computational Workflow}{13}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Parameter Space Definition}{13}{subsubsection.6.2.1}%
+\contentsline {paragraph}{Seven-Dimensional Transformation Parameterization}{13}{equation.6.2}%
+\contentsline {paragraph}{Transformation Matrix}{14}{equation.6.2}%
+\contentsline {subparagraph}{Step 1: Rotation Angle Recovery}{14}{equation.6.2}%
+\contentsline {subparagraph}{Step 2: Rotation Around Origin}{14}{equation.6.4}%
+\contentsline {subparagraph}{Step 3: Rotation Around Arbitrary Center}{14}{equation.6.5}%
+\contentsline {subparagraph}{Step 4: Adding Translation}{14}{equation.6.7}%
+\contentsline {subparagraph}{Step 5: Homogeneous Transformation Matrix}{15}{equation.6.9}%
+\contentsline {subparagraph}{Step 6: Coordinate Transformation}{15}{equation.6.10}%
+\contentsline {paragraph}{Multi-Layer Stack Construction}{15}{equation.6.11}%
+\contentsline {paragraph}{Optimization Bounds}{15}{equation.6.12}%
+\contentsline {paragraph}{Parameter Bounds and Clamping}{16}{table.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}Objective Function Evaluation}{16}{subsubsection.6.2.2}%
+\contentsline {paragraph}{Evaluation Pipeline}{16}{subsubsection.6.2.2}%
+\contentsline {paragraph}{Energy Component}{17}{subsubsection.6.2.2}%
+\contentsline {paragraph}{Clash Penalty Models}{17}{equation.6.14}%
+\contentsline {paragraph}{Combined Objective and Failure Handling}{17}{equation.6.14}%
+\contentsline {paragraph}{Penalty Summary}{17}{equation.6.17}%
+\contentsline {paragraph}{Behavior Across Regimes}{18}{table.3}%
+\contentsline {subsubsection}{\numberline {6.2.3}xTB Parallel Execution}{18}{subsubsection.6.2.3}%
+\contentsline {paragraph}{Worker Pool Architecture}{18}{subsubsection.6.2.3}%
+\contentsline {paragraph}{Performance Considerations}{18}{subsubsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.3}Symmetry Detection}{19}{subsection.6.3}%
+\contentsline {paragraph}{Symmetry Detection Algorithm}{19}{subsection.6.3}%
+\contentsline {paragraph}{Impact on Optimization Efficiency}{19}{table.4}%
+\contentsline {subsection}{\numberline {6.4}Logging and Output}{19}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Console Output Structure}{19}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {6.4.2}File Artifacts}{20}{subsubsection.6.4.2}%
+\contentsline {section}{\numberline {7}Optimization Algorithms}{20}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Particle Swarm Optimization (PSO)}{20}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}Algorithm Overview}{20}{subsubsection.7.1.1}%
+\contentsline {subsubsection}{\numberline {7.1.2}Mathematical Formulation}{20}{subsubsection.7.1.2}%
+\contentsline {subsubsection}{\numberline {7.1.3}Algorithm Workflow}{21}{subsubsection.7.1.3}%
+\contentsline {subsubsection}{\numberline {7.1.4}Key Parameters}{21}{subsubsection.7.1.4}%
+\contentsline {subsection}{\numberline {7.2}PSO + Nelder-Mead Hybrid}{21}{subsection.7.2}%
+\contentsline {subsubsection}{\numberline {7.2.1}Key Parameters}{21}{subsubsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.3}Genetic Algorithm (GA)}{21}{subsection.7.3}%
+\contentsline {subsubsection}{\numberline {7.3.1}Algorithm Overview}{21}{subsubsection.7.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.2}Mathematical Formulation}{21}{subsubsection.7.3.2}%
+\contentsline {paragraph}{Selection.}{21}{subsubsection.7.3.2}%
+\contentsline {paragraph}{Crossover.}{21}{subsubsection.7.3.2}%
+\contentsline {paragraph}{Mutation.}{22}{equation.7.21}%
+\contentsline {subsubsection}{\numberline {7.3.3}Key Parameters}{22}{subsubsection.7.3.3}%
+\contentsline {subsection}{\numberline {7.4}Grey Wolf Optimizer (GWO)}{22}{subsection.7.4}%
+\contentsline {subsubsection}{\numberline {7.4.1}Algorithm Overview}{22}{subsubsection.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.2}Mathematical Formulation}{22}{subsubsection.7.4.2}%
+\contentsline {paragraph}{Wolf Hierarchy.}{22}{subsubsection.7.4.2}%
+\contentsline {paragraph}{Position Update.}{22}{subsubsection.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.3}Key Parameters}{23}{subsubsection.7.4.3}%
+\contentsline {section}{\numberline {8}Advanced Topics}{23}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Extensibility Guidelines}{23}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Performance Tuning}{23}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Worker Count Selection}{23}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.2.2}Algorithm Selection}{24}{subsubsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.3}Best Practices}{24}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Hyperparameter Optimization Framework}{24}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Hyperparameter Specifications}{25}{subsection.9.1}%
+\contentsline {paragraph}{Particle Swarm Optimization (PSO)}{25}{subsection.9.1}%
+\contentsline {paragraph}{Genetic Algorithm (GA)}{25}{table.6}%
+\contentsline {paragraph}{Grey Wolf Optimizer (GWO)}{25}{table.7}%
+\contentsline {paragraph}{PSO + Nelder-Mead Hybrid (PSO-NM)}{26}{table.8}%
+\contentsline {subsection}{\numberline {9.2}Optimization Modes}{26}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}Sequential Mode (Default)}{26}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}Joint Study Mode}{27}{subsubsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.3}Optuna Integration}{27}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Study Management}{28}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}Result Caching}{28}{subsubsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.4}Usage and Command-Line Interface}{28}{subsection.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.1}Basic Usage}{28}{subsubsection.9.4.1}%
+\contentsline {paragraph}{Sequential Optimization}{28}{subsubsection.9.4.1}%
+\contentsline {paragraph}{Joint Study Optimization}{28}{lstnumber.-20.5}%
+\contentsline {subsubsection}{\numberline {9.4.2}Command-Line Reference}{28}{subsubsection.9.4.2}%
+\contentsline {subsubsection}{\numberline {9.4.3}Worked Example}{29}{subsubsection.9.4.3}%
+\contentsline {subsubsection}{\numberline {9.4.4}Input Directory Structure}{30}{subsubsection.9.4.4}%
+\contentsline {subsection}{\numberline {9.5}Output and Results}{30}{subsection.9.5}%
+\contentsline {subsubsection}{\numberline {9.5.1}File Structure}{30}{subsubsection.9.5.1}%
+\contentsline {subsubsection}{\numberline {9.5.2}Result File Formats}{30}{subsubsection.9.5.2}%
+\contentsline {subsection}{\numberline {9.6}Advanced Features}{30}{subsection.9.6}%
+\contentsline {subsubsection}{\numberline {9.6.1}Warm Starting Strategy}{31}{subsubsection.9.6.1}%
+\contentsline {subsubsection}{\numberline {9.6.2}Cache Management}{31}{subsubsection.9.6.2}%
+\contentsline {subsubsection}{\numberline {9.6.3}Custom Base Arguments}{31}{subsubsection.9.6.3}%
+\contentsline {subsection}{\numberline {9.7}Performance Considerations}{31}{subsection.9.7}%
+\contentsline {subsubsection}{\numberline {9.7.1}Computational Scaling}{31}{subsubsection.9.7.1}%
+\contentsline {subsubsection}{\numberline {9.7.2}Memory and Storage}{31}{subsubsection.9.7.2}%
+\contentsline {subsection}{\numberline {9.8}Best Practices}{32}{subsection.9.8}%
