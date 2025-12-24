@@ -13,7 +13,7 @@ Rigid Body Parameters (7 Dimensions)
 
 The relative position and orientation of the monomer unit in the stack are described by:
 
-1.  **Rotation Angle (:math:`\theta`):** To avoid discontinuities and periodic boundary issues associated with angles (e.g., :math:`0 \approx 2\pi`), the rotation is encoded using its sine and cosine components:
+1.  **Rotation Angle ( :math:`\theta` ):** To avoid discontinuities and periodic boundary issues associated with angles (e.g., :math:`0 \approx 2\pi`), the rotation is encoded using its sine and cosine components:
     
     .. math::
 

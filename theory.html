@@ -112,7 +112,7 @@
 <h3>Rigid Body Parameters (7 Dimensions)<a class="headerlink" href="#rigid-body-parameters-7-dimensions" title="Link to this heading"></a></h3>
 <p>The relative position and orientation of the monomer unit in the stack are described by:</p>
 <ol class="arabic">
-<li><p><strong>Rotation Angle (:math:`theta`):</strong> To avoid discontinuities and periodic boundary issues associated with angles (e.g., <span class="math notranslate nohighlight">\(0 \approx 2\pi\)</span>), the rotation is encoded using its sine and cosine components:</p>
+<li><p><strong>Rotation Angle ( :math:`theta` ):</strong> To avoid discontinuities and periodic boundary issues associated with angles (e.g., <span class="math notranslate nohighlight">\(0 \approx 2\pi\)</span>), the rotation is encoded using its sine and cosine components:</p>
 <div class="math notranslate nohighlight">
 \[c_\theta = \cos(\theta), \quad s_\theta = \sin(\theta)\]</div>
 <p>The optimization algorithms evolve <span class="math notranslate nohighlight">\(c_\theta\)</span> and <span class="math notranslate nohighlight">\(s_\theta\)</span> independently, and the actual angle is reconstructed as <span class="math notranslate nohighlight">\(\theta = \text{atan2}(s_\theta, c_\theta)\)</span>.</p>
