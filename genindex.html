@@ -55,7 +55,10 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Background</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input and Output Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">PSO API Reference</a></li>
 </ul>
 
@@ -110,10 +113,96 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    --config
+    --clash-cutoff
 
       <ul>
-        <li><a href="usage.html#cmdoption-config">command line option</a>
+        <li><a href="usage.html#cmdoption-clash-cutoff">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --cognitive
+
+      <ul>
+        <li><a href="usage.html#cmdoption-cognitive">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --ga-crossover-rate
+
+      <ul>
+        <li><a href="usage.html#cmdoption-ga-crossover-rate">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --ga-mutation-rate
+
+      <ul>
+        <li><a href="usage.html#cmdoption-ga-mutation-rate">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --ga-population
+
+      <ul>
+        <li><a href="usage.html#cmdoption-ga-population">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --gfn
+
+      <ul>
+        <li><a href="usage.html#cmdoption-gfn">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --gwo-a-end
+
+      <ul>
+        <li><a href="usage.html#cmdoption-gwo-a-end">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --gwo-a-start
+
+      <ul>
+        <li><a href="usage.html#cmdoption-gwo-a-start">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --gwo-pack-size
+
+      <ul>
+        <li><a href="usage.html#cmdoption-gwo-pack-size">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --inertia
+
+      <ul>
+        <li><a href="usage.html#cmdoption-inertia">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --joint
+
+      <ul>
+        <li><a href="usage.html#cmdoption-joint">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --max-iters
+
+      <ul>
+        <li><a href="usage.html#cmdoption-max-iters">command line option</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    --molecules-root
+
+      <ul>
+        <li><a href="usage.html#cmdoption-molecules-root">command line option</a>
 </li>
       </ul></li>
       <li>
@@ -124,19 +213,52 @@
 </li>
       </ul></li>
       <li>
+    --r-min
+
+      <ul>
+        <li><a href="usage.html#cmdoption-r-min">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --seed
+
+      <ul>
+        <li><a href="usage.html#cmdoption-seed">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --social
+
+      <ul>
+        <li><a href="usage.html#cmdoption-social">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --swarm-size
+
+      <ul>
+        <li><a href="usage.html#cmdoption-swarm-size">command line option</a>
+</li>
+      </ul></li>
+      <li>
+    --trials-per-molecule
+
+      <ul>
+        <li><a href="usage.html#cmdoption-trials-per-molecule">command line option</a>
+</li>
+      </ul></li>
+      <li>
     --workers
 
       <ul>
         <li><a href="usage.html#cmdoption-workers">command line option</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    -c
+    -n
 
       <ul>
-        <li><a href="usage.html#cmdoption-config">command line option</a>
+        <li><a href="usage.html#cmdoption-max-iters">command line option</a>
 </li>
       </ul></li>
       <li>
@@ -199,13 +321,47 @@
     command line option
 
       <ul>
-        <li><a href="usage.html#cmdoption-config">--config</a>
+        <li><a href="usage.html#cmdoption-clash-cutoff">--clash-cutoff</a>
+</li>
+        <li><a href="usage.html#cmdoption-cognitive">--cognitive</a>
+</li>
+        <li><a href="usage.html#cmdoption-ga-crossover-rate">--ga-crossover-rate</a>
+</li>
+        <li><a href="usage.html#cmdoption-ga-mutation-rate">--ga-mutation-rate</a>
+</li>
+        <li><a href="usage.html#cmdoption-ga-population">--ga-population</a>
+</li>
+        <li><a href="usage.html#cmdoption-gfn">--gfn</a>
+</li>
+        <li><a href="usage.html#cmdoption-gwo-a-end">--gwo-a-end</a>
+</li>
+        <li><a href="usage.html#cmdoption-gwo-a-start">--gwo-a-start</a>
+</li>
+        <li><a href="usage.html#cmdoption-gwo-pack-size">--gwo-pack-size</a>
+</li>
+        <li><a href="usage.html#cmdoption-inertia">--inertia</a>
+</li>
+        <li><a href="usage.html#cmdoption-joint">--joint</a>
+</li>
+        <li><a href="usage.html#cmdoption-max-iters">--max-iters</a>
+</li>
+        <li><a href="usage.html#cmdoption-molecules-root">--molecules-root</a>
 </li>
         <li><a href="usage.html#cmdoption-optimizer">--optimizer</a>
 </li>
+        <li><a href="usage.html#cmdoption-r-min">--r-min</a>
+</li>
+        <li><a href="usage.html#cmdoption-seed">--seed</a>
+</li>
+        <li><a href="usage.html#cmdoption-social">--social</a>
+</li>
+        <li><a href="usage.html#cmdoption-swarm-size">--swarm-size</a>
+</li>
+        <li><a href="usage.html#cmdoption-trials-per-molecule">--trials-per-molecule</a>
+</li>
         <li><a href="usage.html#cmdoption-workers">--workers</a>
 </li>
-        <li><a href="usage.html#cmdoption-config">-c</a>
+        <li><a href="usage.html#cmdoption-max-iters">-n</a>
 </li>
         <li><a href="usage.html#cmdoption-optimizer">-opt</a>
 </li>

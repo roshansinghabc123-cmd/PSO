@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input and Output Files &mdash; π-Stack Optimizer 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f52818fb" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Optimization Algorithms" href="optimization.html" />
+    <link rel="prev" title="Theoretical Background" href="theory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            π-Stack Optimizer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Background</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input and Output Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-files">Input Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xyz-file">XYZ File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#torsions-json">torsions.json</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PSO API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">π-Stack Optimizer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Input and Output Files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/inputs_outputs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="input-and-output-files">
+<h1>Input and Output Files<a class="headerlink" href="#input-and-output-files" title="Link to this heading"></a></h1>
+<section id="input-files">
+<h2>Input Files<a class="headerlink" href="#input-files" title="Link to this heading"></a></h2>
+<section id="xyz-file">
+<h3>XYZ File<a class="headerlink" href="#xyz-file" title="Link to this heading"></a></h3>
+<p>The primary input is a standard <strong>XYZ file</strong> containing the atomic coordinates of a single monomer unit.
+*   <strong>Format:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Line 1: Number of atoms.</p></li>
+<li><p>Line 2: Comment line (can include charge/multiplicity info).</p></li>
+<li><p>Line 3+: Element symbol and X, Y, Z coordinates.</p></li>
+</ul>
+</div></blockquote>
+<p><strong>Example (benzene.xyz):</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>12
+Benzene molecule
+C        0.00000        1.39700        0.00000
+C        1.21000        0.69800        0.00000
+...
+</pre></div>
+</div>
+</section>
+<section id="torsions-json">
+<h3>torsions.json<a class="headerlink" href="#torsions-json" title="Link to this heading"></a></h3>
+<p>For molecules with flexible bonds, a JSON file defines the definition of rotatable dihedrals.</p>
+<ul class="simple">
+<li><p><strong>Structure:</strong> A list of torsion objects.</p></li>
+<li><p><strong>Fields:</strong></p>
+<ul>
+<li><p><cite>indices</cite>: Array of 4 atom indices (0-based or 1-based, system detects automatically) defining the dihedral angle.</p></li>
+<li><p><cite>rotate_side</cite>: Specifies which part of the molecule moves (<cite>“left”</cite>, <cite>“right”</cite>, or <cite>“center”</cite>).</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;indices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;rotate_side&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;right&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
+<p>Generated upon completion of a run:</p>
+<ol class="arabic">
+<li><p><strong>optimized_monomer_[name].xyz</strong></p>
+<p>The geometry of the single monomer unit in its optimized internal conformation (if flexible bonds were optimized).</p>
+</li>
+<li><p><strong>optimized_stack_[name].xyz</strong></p>
+<p>A resulting stack structure (typically 10 layers) generated using the optimal rigid body parameters found. This is useful for visual inspection.</p>
+</li>
+<li><p><strong>optimization_results.txt</strong></p>
+<p>A summary text file containing:
+*   Final optimized parameters ($T, C, theta$).
+*   Final Binding Energy.
+*   Details of the xTB calculation.</p>
+</li>
+<li><p><strong>pso_trajectory.csv</strong> (Optional)</p>
+<p>If trajectory logging is enabled, this file contains the history of the optimization, including:
+*   Iteration number.
+*   Particle ID.
+*   Parameter values.
+*   Energy/Fitness values.</p>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="theory.html" class="btn btn-neutral float-left" title="Theoretical Background" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimization.html" class="btn btn-neutral float-right" title="Optimization Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arunima Ghosh, Susmita Barik, Roshan J. Singh, Sandeep K. Reddy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

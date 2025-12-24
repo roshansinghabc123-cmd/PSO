@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theoretical Background &mdash; π-Stack Optimizer 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f52818fb" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script>let toggleHintShow = 'Click to show';</script>
+      <script>let toggleHintHide = 'Click to hide';</script>
+      <script>let toggleOpenOnPrint = 'true';</script>
+      <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Input and Output Files" href="inputs_outputs.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            π-Stack Optimizer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theoretical Background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-space-definition">Parameter Space Definition</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rigid-body-parameters-7-dimensions">Rigid Body Parameters (7 Dimensions)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flexible-parameters-n-dimensions">Flexible Parameters ($N$ Dimensions)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#objective-function">Objective Function</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#energy-calculation">Energy Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#penalty-functions">Penalty Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input and Output Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">PSO API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">π-Stack Optimizer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Theoretical Background</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/theory.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="theoretical-background">
+<h1>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h1>
+<p>The <strong>π-Stack Optimizer</strong> solves the problem of finding energetically favorable configurations for molecular stacks. This is achieved by combining quantum chemical energy evaluations with global optimization algorithms.</p>
+<section id="parameter-space-definition">
+<h2>Parameter Space Definition<a class="headerlink" href="#parameter-space-definition" title="Link to this heading"></a></h2>
+<p>The geometry of the molecular stack is defined by a set of parameters that describe the rigid body transformation of the monomer and its internal conformational flexibility. The total parameter space has dimensions <span class="math notranslate nohighlight">\(7 + N\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the number of flexible dihedral angles.</p>
+<section id="rigid-body-parameters-7-dimensions">
+<h3>Rigid Body Parameters (7 Dimensions)<a class="headerlink" href="#rigid-body-parameters-7-dimensions" title="Link to this heading"></a></h3>
+<p>The relative position and orientation of the monomer unit in the stack are described by:</p>
+<ol class="arabic">
+<li><p><strong>Rotation Angle ($theta$):</strong> To avoid discontinuities and periodic boundary issues associated with angles (e.g., <span class="math notranslate nohighlight">\(0 \approx 2\pi\)</span>), the rotation is encoded using its sine and cosine components:</p>
+<div class="math notranslate nohighlight">
+\[c_\theta = \cos(\theta), \quad s_\theta = \sin(\theta)\]</div>
+<p>The optimization algorithms evolve <span class="math notranslate nohighlight">\(c_\theta\)</span> and <span class="math notranslate nohighlight">\(s_\theta\)</span> independently, and the actual angle is reconstructed as <span class="math notranslate nohighlight">\(\theta = \text{atan2}(s_\theta, c_\theta)\)</span>.</p>
+</li>
+<li><p><strong>Translation Vector ($mathbf{T}$):</strong> Three parameters describe the translation of the monomer along the Cartesian axes:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{T} = [T_x, T_y, T_z]\]</div>
+</li>
+<li><p><strong>Rotation Center ($mathbf{C}$):</strong> Two parameters define the effective center of rotation in the X-Y plane (perpendicular to the stacking axis, usually Z):</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{C} = [C_x, C_y]\]</div>
+<p>Combined with a fixed $C_z = 0$, this allows for off-axis stacking arrangements.</p>
+</li>
+</ol>
+</section>
+<section id="flexible-parameters-n-dimensions">
+<h3>Flexible Parameters ($N$ Dimensions)<a class="headerlink" href="#flexible-parameters-n-dimensions" title="Link to this heading"></a></h3>
+<p>For molecules with internal flexibility, specific rotatable bonds can be defined. Each bond $i$ contributes one degree of freedom:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\tau} = [\tau_1, \tau_2, \dots, \tau_N]\]</div>
+<p>These are dihedral angles that modify the monomer’s internal structure before the rigid body transformation is applied.</p>
+</section>
+</section>
+<section id="objective-function">
+<h2>Objective Function<a class="headerlink" href="#objective-function" title="Link to this heading"></a></h2>
+<p>The goal of the optimization is to minimize the <strong>binding energy</strong> per monomer in the stack.</p>
+<section id="energy-calculation">
+<h3>Energy Calculation<a class="headerlink" href="#energy-calculation" title="Link to this heading"></a></h3>
+<p>The binding energy (<span class="math notranslate nohighlight">\(E_{bind}\)</span>) is calculated using the <strong>Semi-Empirical Tight-Binding (xTB)</strong> method (specifically GFN2-xTB by default). For a system of <span class="math notranslate nohighlight">\(N\)</span> monomers (typically a dimer, <span class="math notranslate nohighlight">\(N=2\)</span>) with total energy <span class="math notranslate nohighlight">\(E_{stack}\)</span> and isolated monomer energy <span class="math notranslate nohighlight">\(E_{mono}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[E_{bind} = \frac{E_{stack} - N \cdot E_{mono}}{N - 1}\]</div>
+</section>
+<section id="penalty-functions">
+<h3>Penalty Functions<a class="headerlink" href="#penalty-functions" title="Link to this heading"></a></h3>
+<p>To ensure physically realistic and computationally viable configurations, several penalty terms are added to the energy:</p>
+<ol class="arabic">
+<li><p><strong>Hard Clash Penalty:</strong> If any two atoms between adjacent monomers are closer than a cutoff distance (<span class="math notranslate nohighlight">\(d_{inter} &lt; 1.6 \text{ \AA}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[P_{clash} = 1000.0\]</div>
+</li>
+<li><p><strong>Intramolecular Clash Penalty:</strong> For flexible molecules, if atoms within the monomer overlap (<span class="math notranslate nohighlight">\(d_{intra} &lt; 1.2 \text{ \AA}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[P_{intra} = 1000.0\]</div>
+</li>
+<li><p><strong>SCF Convergence Failure:</strong> If the xTB calculation fails to converge (e.g., due to extreme geometry distortion):</p>
+<div class="math notranslate nohighlight">
+\[P_{fail} = 1,000,000\]</div>
+</li>
+</ol>
+<p>The final objective function value is:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = E_{bind} + P_{clash} + P_{intra} + P_{fail}\]</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="inputs_outputs.html" class="btn btn-neutral float-right" title="Input and Output Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Arunima Ghosh, Susmita Barik, Roshan J. Singh, Sandeep K. Reddy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
