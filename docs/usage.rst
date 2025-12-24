@@ -52,17 +52,17 @@ Algorithm Specific Parameters
 
 .. option:: --inertia
 
-   Inertia weight ($\omega$).
+   Inertia weight (:math:`\omega`).
    *   Default: ``0.73``
 
 .. option:: --cognitive
 
-   Cognitive coefficient ($c_1$).
+   Cognitive coefficient (:math:`c_1`).
    *   Default: ``1.50``
 
 .. option:: --social
 
-   Social coefficient ($c_2$).
+   Social coefficient (:math:`c_2`).
    *   Default: ``1.50``
 
 **Genetic Algorithm Options:**
@@ -91,12 +91,12 @@ Algorithm Specific Parameters
 
 .. option:: --gwo-a-start
 
-   Initial value of the convergence parameter $a$.
+   Initial value of the convergence parameter :math:`a`.
    *   Default: ``2.0``
 
 .. option:: --gwo-a-end
 
-   Final value of the convergence parameter $a$.
+   Final value of the convergence parameter :math:`a`.
    *   Default: ``0.0``
 
 Physical & backend Parameters
