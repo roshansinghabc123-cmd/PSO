@@ -28,17 +28,17 @@ General Options
 .. option:: --workers, -w
 
    Number of parallel xTB workers.
-   *   Default: All available CPUs
+   *   Default: ``4``
 
 .. option:: --max-iters, -n
 
    Maximum number of optimization iterations.
-   *   Default: ``100``
+   *   Default: ``300``
 
 .. option:: --seed
 
    Random seed for reproducibility.
-   *   Default: ``None``
+   *   Default: ``42``
 
 Algorithm Specific Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +48,7 @@ Algorithm Specific Parameters
 .. option:: --swarm-size
 
    Number of particles in the swarm.
-   *   Default: ``30``
+   *   Default: ``60``
 
 .. option:: --inertia
 

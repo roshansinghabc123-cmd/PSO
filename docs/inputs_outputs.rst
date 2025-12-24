@@ -51,11 +51,11 @@ Output Files
 
 Generated upon completion of a run:
 
-1.  **optimized_monomer_[name].xyz**
+1.  **molecule_after_torsion.xyz**
     
     The geometry of the single monomer unit in its optimized internal conformation (if flexible bonds were optimized).
 
-2.  **optimized_stack_[name].xyz**
+2.  **molecular_stack_[N]molecules.xyz**
     
     A resulting stack structure (typically 10 layers) generated using the optimal rigid body parameters found. This is useful for visual inspection.
 
