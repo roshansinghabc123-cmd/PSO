@@ -13,7 +13,7 @@ Rigid Body Parameters (7 Dimensions)
 
 The relative position and orientation of the monomer unit in the stack are described by:
 
-1.  **Rotation Angle ( :math:`\theta` ):** To avoid discontinuities and periodic boundary issues associated with angles (e.g., :math:`0 \approx 2\pi`), the rotation is encoded using its sine and cosine components:
+1.  **Rotation Angle** (:math:`\theta`): To avoid discontinuities and periodic boundary issues associated with angles (e.g., :math:`0 \approx 2\pi`), the rotation is encoded using its sine and cosine components:
     
     .. math::
 
@@ -21,13 +21,13 @@ The relative position and orientation of the monomer unit in the stack are descr
 
     The optimization algorithms evolve :math:`c_\theta` and :math:`s_\theta` independently, and the actual angle is reconstructed as :math:`\theta = \text{atan2}(s_\theta, c_\theta)`.
 
-2.  **Translation Vector (:math:`\mathbf{T}`):** Three parameters describe the translation of the monomer along the Cartesian axes:
+2.  **Translation Vector** (:math:`\mathbf{T}`): Three parameters describe the translation of the monomer along the Cartesian axes:
     
     .. math::
 
        \mathbf{T} = [T_x, T_y, T_z]
 
-3.  **Rotation Center (:math:`\mathbf{C}`):** Two parameters define the effective center of rotation in the X-Y plane (perpendicular to the stacking axis, usually Z):
+3.  **Rotation Center** (:math:`\mathbf{C}`): Two parameters define the effective center of rotation in the X-Y plane (perpendicular to the stacking axis, usually Z):
 
     .. math::
 
