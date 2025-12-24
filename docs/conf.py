@@ -19,6 +19,7 @@ extensions = [
     'sphinx_design',
     'sphinx_copybutton',
     'sphinx_togglebutton',
+    'sphinx.ext.mathjax',
 ]
 
 templates_path = ['_templates']

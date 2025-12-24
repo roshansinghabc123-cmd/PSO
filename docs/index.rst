@@ -8,6 +8,9 @@ The **π-Stack Optimizer** is a high-performance computational framework for ide
    :caption: Contents:
 
    installation
+   theory
+   inputs_outputs
+   optimization
    usage
    modules
 

@@ -1,61 +1,142 @@
-Usage
-=====
+Usage and CLI Reference
+=======================
 
-The π-Stack Optimizer provides a command-line interface for generating molecular stacks and performing global optimization.
+The **π-Stack Optimizer** provides a robust command-line interface.
 
-Basic Usage
------------
+Main Command: pi-stack-generator
+--------------------------------
 
-The primary command for running optimizations is ``pi-stack-generator`` (if using the wrapper) or by executing the python module directly.
+Run the optimization using the wrapper script or python module.
 
 .. code-block:: bash
 
    pi-stack-generator [INPUT_FILE] [OPTIONS]
 
-Arguments
----------
+General Options
+~~~~~~~~~~~~~~~
 
 .. option:: input_file
 
-   Path to the input file (JSON or XYZ format) defining the molecular system.
+   (Required) Path to the `.xyz` or `.json` file describing the system.
 
 .. option:: --optimizer, -opt
 
-   The optimization algorithm to use. Available options:
-   
-   * ``pso``: Particle Swarm Optimization (Default)
-   * ``ga``: Genetic Algorithm
-   * ``gwo``: Grey Wolf Optimizer
-   * ``pso_nm``: Hybrid PSO + Nelder-Mead
+   Optimization algorithm to use.
+   *   Default: ``pso``
+   *   Choices: ``pso``, ``ga``, ``gwo``, ``pso_nm``
 
 .. option:: --workers, -w
 
-   Number of parallel workers for energy evaluation.
+   Number of parallel xTB workers.
+   *   Default: All available CPUs
 
-.. option:: --config, -c
+.. option:: --max-iters, -n
 
-   Path to a conceptual configuration file for advanced parameter tuning.
+   Maximum number of optimization iterations.
+   *   Default: ``100``
 
-Examples
---------
+.. option:: --seed
 
-**Run a standard PSO optimization:**
+   Random seed for reproducibility.
+   *   Default: ``None``
+
+Algorithm Specific Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**PSO Options:**
+
+.. option:: --swarm-size
+
+   Number of particles in the swarm.
+   *   Default: ``30``
+
+.. option:: --inertia
+
+   Inertia weight ($\omega$).
+   *   Default: ``0.73``
+
+.. option:: --cognitive
+
+   Cognitive coefficient ($c_1$).
+   *   Default: ``1.50``
+
+.. option:: --social
+
+   Social coefficient ($c_2$).
+   *   Default: ``1.50``
+
+**Genetic Algorithm Options:**
+
+.. option:: --ga-population
+
+   Population size.
+   *   Default: ``80``
+
+.. option:: --ga-mutation-rate
+
+   Probability of mutation.
+   *   Default: ``0.10``
+
+.. option:: --ga-crossover-rate
+
+   Probability of crossover.
+   *   Default: ``0.90``
+
+**Grey Wolf Optimizer Options:**
+
+.. option:: --gwo-pack-size
+
+   Number of wolves (search agents).
+   *   Default: ``50``
+
+.. option:: --gwo-a-start
+
+   Initial value of the convergence parameter $a$.
+   *   Default: ``2.0``
+
+.. option:: --gwo-a-end
+
+   Final value of the convergence parameter $a$.
+   *   Default: ``0.0``
+
+Physical & backend Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. option:: --r-min
+
+   Minimum allowed intermolecular distance (Penalty threshold).
+   *   Default: ``3.0`` Å
+
+.. option:: --clash-cutoff
+
+   Hard clash cutoff distance.
+   *   Default: ``1.6`` Å
+
+.. option:: --gfn
+
+   xTB GFN parameterization.
+   *   Default: ``2``
+
+Hyperparameter Tuning (pi-hyperopt)
+-----------------------------------
+
+The ``pi-hyperopt`` command is used for automated parameter tuning using Optuna.
 
 .. code-block:: bash
 
-   pi-stack-generator benzene_dimer.xyz --optimizer pso
+   pi-hyperopt --molecules-root ./molecules --trials-per-molecule 50 --joint
 
-**Run with Genetic Algorithm and 4 workers:**
+Arguments:
 
-.. code-block:: bash
+.. option:: --molecules-root
 
-   pi-stack-generator input.json --optimizer ga --workers 4
+   Directory containing subfolders of molecules to train on.
 
-Hyperparameter Optimization
----------------------------
+.. option:: --trials-per-molecule
 
-For advanced users, the ``pi-hyperopt`` tool allows for tuning the meta-parameters of the optimization algorithms using Optuna.
+   Number of Optuna trials to run per molecule.
+   *   Default: ``50``
 
-.. code-block:: bash
+.. option:: --joint
 
-   pi-hyperopt --study-name mysstudy --n-trials 100
+   If set, runs Joint Optimization mode to find a single best parameter set for the dataset.
