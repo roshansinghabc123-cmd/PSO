@@ -563,8 +563,8 @@ window.addEventListener("load", load);
 <li><p><strong>Principal Component Analysis (PCA)</strong>: Used in <code class="docutils literal notranslate"><span class="pre">align_pi_core_to_xy</span></code>. It finds the plane of “flatness” in a molecule by analyzing the covariance matrix of atomic coordinates.</p></li>
 <li><p><strong>Collision Detection</strong>:</p>
 <ul>
-<li><p>Uses <code class="docutils literal notranslate"><span class="pre">scipy.spatial.cKDTree</span></code> (if available) for O(N log N) neighbor search.</p></li>
-<li><p>Falls back to NumPy broadcasting (O(N^2)) for environments without SciPy.</p></li>
+<li><p>Uses <code class="docutils literal notranslate"><span class="pre">scipy.spatial.cKDTree</span></code> (if available) for <span class="math notranslate nohighlight">\(O(N \log N)\)</span> neighbor search.</p></li>
+<li><p>Falls back to NumPy broadcasting (<span class="math notranslate nohighlight">\(O(N^2)\)</span>) for environments without SciPy.</p></li>
 </ul>
 </li>
 </ul>
@@ -578,7 +578,7 @@ window.addEventListener("load", load);
 <li><p><strong>The Pool</strong>:</p>
 <ul>
 <li><p>The main process creates a queue of tasks.</p></li>
-<li><p>$N$ worker processes consume tasks from the queue.</p></li>
+<li><p><span class="math notranslate nohighlight">\(N\)</span> worker processes consume tasks from the queue.</p></li>
 <li><p>Each worker creates a unique temporary directory (<cite>/tmp/xtb_run_…</cite>) to run xTB without file collisions.</p></li>
 <li><p>Results are sent back via a results queue.</p></li>
 </ul>
