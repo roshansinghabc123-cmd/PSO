@@ -31,6 +31,14 @@ html_theme = 'sphinx_rtd_theme'
 html_css_files = ["custom.css"]
 html_static_path = ['_static']
 
+html_context = {
+    "display_github": True,
+    "github_user": "sandeepgroup",
+    "github_repo": "pi-stack-optimizer",
+    "github_version": "main",
+    "conf_py_path": "/docs/",
+}
+
 # -- Options for autodoc -----------------------------------------------------
 
 autodoc_mock_imports = ['numpy', 'scipy', 'ase']  # Mock imports for RTD builds if needed
