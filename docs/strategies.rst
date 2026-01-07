@@ -1,4 +1,4 @@
-Optimization Algorithms
+Optimization Strategies
 =======================
 
 The π-Stack Optimizer implements several nature-inspired global optimization algorithms. This section details their mechanics and offers practical advice for tuning them.
