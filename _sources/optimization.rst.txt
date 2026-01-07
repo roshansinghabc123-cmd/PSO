@@ -1,16 +1,14 @@
 Optimization Algorithms
 =======================
 
-The π-Stack Optimizer implements several nature-inspired global optimization algorithms to explore the potential energy surface.
+The π-Stack Optimizer implements several nature-inspired global optimization algorithms. This section details their mechanics and offers practical advice for tuning them.
 
 Particle Swarm Optimization (PSO)
 ---------------------------------
 
-PSO simulates the behavior of a flock of birds. A swarm of particles moves through the parameter space, with each particle's velocity influenced by its own best known position and the swarm's global best position.
+PSO simulates a flock of birds (swarm) moving through the parameter space. It is the default algorithm because it offers a good balance between exploration (searching new areas) and exploitation (refining known good areas).
 
-**Update Equations:**
-
-For each particle :math:`i` at iteration :math:`t`:
+**Update Equations**
 
 .. math::
 
@@ -20,57 +18,71 @@ For each particle :math:`i` at iteration :math:`t`:
 
    x_i^{t+1} = x_i^t + v_i^{t+1}
 
-Where:
-*   :math:`\omega`: Inertia weight (controls momentum).
-*   :math:`c_1, c_2`: Cognitive and Social coefficients.
-*   :math:`r_1, r_2`: Random numbers in :math:`[0, 1]`.
-*   :math:`pbest_i`: Personal best position of particle :math:`i`.
-*   :math:`gbest`: Global best position of the swarm.
+**Parameter Tuning Guide**
+
+*   **Inertia** (:math:`\omega`): Controls momentum.
+    *   *High (e.g., 0.9)*: Particles fly through the space quickly. Good for initial exploration or large, flat energy landscapes.
+    *   *Low (e.g., 0.4)*: Particles slow down and settle. Good for fine-tuning.
+    *   *Default (0.73)*: A mathematically derived "magic number" that generally works well.
+
+*   **Cognitive** (:math:`c_1`) vs **Social** (:math:`c_2`):
+    *   *High Cognitive*: Particles are nostalgic; they return to *their own* best discoveries. Maintains diversity.
+    *   *High Social*: Particles are conformist; they rush to the *swarm's* best discovery. Converges fast but risks premature convergence to local minima.
+    *   *Recommendation*: Keep them equal (1.5) or slightly bias Social if you need faster results.
 
 Genetic Algorithm (GA)
 ----------------------
 
-The GA evolves a population of solutions using operators inspired by biological evolution.
+The GA mimics biological evolution. It is often superior for "rough" energy landscapes with many sharp peaks, as it can jump across barriers via crossover.
 
-**Key Components:**
-*   **Selection:** Tournament selection is used to choose parents for the next generation.
-*   **Crossover:** Simulated Binary Crossover (SBX) creates offspring by recombining parent parameters.
-*   **Mutation:** Gaussian mutation adds random perturbations to maintain diversity.
-*   **Elitism:** A fraction of the best individuals are preserved unchanged.
+**Mechanics**
+1.  **Selection**: Uses Tournament Selection. A small group (size 3) is picked at random, and the fittest one becomes a parent.
+2.  **Crossover**: Uses Simulated Binary Crossover (SBX). Parents mix their parameters to create offspring.
+3.  **Mutation**: Adds Gaussian noise to parameters. This prevents the population from becoming identical.
+
+**Tuning Tips**
+*   **Population Size**: Larger is better for complex molecules (flexible linkers). Use 100+ for difficult cases.
+*   **Mutation Rate**: If the algorithm gets stuck early, increase this (e.g., to 0.2).
 
 Grey Wolf Optimizer (GWO)
 -------------------------
 
-GWO mimics the leadership hierarchy and hunting mechanism of grey wolves.
+GWO simulates the leadership hierarchy of wolves. It is mathematically unique because it tracks the **top 3** solutions (:math:`\alpha, \beta, \delta`) simultaneously, rather than just one global best.
 
-**Hierarchy:**
-*   :math:`\alpha` (Alpha): The best solution found so far.
-*   :math:`\beta` (Beta): The second best solution.
-*   :math:`\delta` (Delta): The third best solution.
-*   :math:`\omega` (Omega): The rest of the search agents.
+**When to use GWO?**
+*   GWO is often **faster** than PSO for simple rigid-body stacking (dimers without torsions).
+*   It has fewer parameters to tune (no inertia or coefficients), making it easier to use "out of the box."
 
-**Position Update:**
-The position of a wolf is updated by averaging the vectors towards the three leaders:
-
-.. math::
-
-   \vec{D}_\alpha = |\vec{C}_1 \cdot \vec{X}_\alpha - \vec{X}|, \quad \vec{X}_1 = \vec{X}_\alpha - \vec{A}_1 \cdot \vec{D}_\alpha
-
-.. math::
-
-   \vec{X}(t+1) = \frac{\vec{X}_1 + \vec{X}_2 + \vec{X}_3}{3}
-
-PSO + Nelder-Mead Hybrid
+Hybrid PSO + Nelder-Mead
 ------------------------
 
-This hybrid approach combines the global search capability of PSO with the local refinement of the Nelder-Mead simplex method. 
-Periodically, the global best solution found by PSO is used as a starting point for a local Nelder-Mead optimization run to fine-tune the minimum.
+This is the most expensive but most accurate method.
 
-Hyperparameter Optimization
----------------------------
+1.  **Stage 1 (Global)**: PSO explores the landscape to find a promising basin of attraction.
+2.  **Stage 2 (Local)**: Periodically, the Nelder-Mead simplex algorithm is launched from the best particle to "drill down" to the exact bottom of the well.
 
-The optimizer includes a built-in hyperparameter tuning framework using **Optuna**. This allows for the automatic discovery of optimal algorithm parameters (e.g., PSO inertia, GA mutation rate) for a specific molecular system.
+**Best For:**
+*   Final production runs where you need the energy accurate to 0.01 kJ/mol.
+*   Situations where the energy landscape is "pitted" (many small local minima).
 
-**Optimization Modes:**
-*   **Sequential:** Optimizes parameters for one molecule at a time, using previous results to warm-start the search.
-*   **Joint:** Finds a single robust set of hyperparameters that performs well across a dataset of multiple molecules.
+Algorithm Selection Cheat Sheet
+-------------------------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Scenario
+     - Recommended Optimizer
+     - Notes
+   * - **General Dimer**
+     - PSO
+     - Reliable default.
+   * - **High-Throughput Screening**
+     - GWO
+     - Fast convergence, low tuning.
+   * - **Flexible Monomers**
+     - GA or PSO
+     - Better at handling higher dimensions.
+   * - **Publication Quality**
+     - PSO-NM
+     - Ensures the true minimum is found.

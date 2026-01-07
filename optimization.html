@@ -33,8 +33,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Usage and CLI Reference" href="usage.html" />
-    <link rel="prev" title="Input and Output Files" href="inputs_outputs.html" /> 
+    <link rel="next" title="User Guide" href="usage.html" />
+    <link rel="prev" title="Input &amp; Output Files" href="inputs_outputs.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,16 +60,16 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input and Output Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input &amp; Output Files</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Optimization Algorithms</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#particle-swarm-optimization-pso">Particle Swarm Optimization (PSO)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#genetic-algorithm-ga">Genetic Algorithm (GA)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#grey-wolf-optimizer-gwo">Grey Wolf Optimizer (GWO)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pso-nelder-mead-hybrid">PSO + Nelder-Mead Hybrid</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hybrid-pso-nelder-mead">Hybrid PSO + Nelder-Mead</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algorithm-selection-cheat-sheet">Algorithm Selection Cheat Sheet</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation_details.html">Implementation Details</a></li>
 </ul>
@@ -100,58 +100,84 @@
              
   <section id="optimization-algorithms">
 <h1>Optimization Algorithms<a class="headerlink" href="#optimization-algorithms" title="Link to this heading"></a></h1>
-<p>The π-Stack Optimizer implements several nature-inspired global optimization algorithms to explore the potential energy surface.</p>
+<p>The π-Stack Optimizer implements several nature-inspired global optimization algorithms. This section details their mechanics and offers practical advice for tuning them.</p>
 <section id="particle-swarm-optimization-pso">
 <h2>Particle Swarm Optimization (PSO)<a class="headerlink" href="#particle-swarm-optimization-pso" title="Link to this heading"></a></h2>
-<p>PSO simulates the behavior of a flock of birds. A swarm of particles moves through the parameter space, with each particle’s velocity influenced by its own best known position and the swarm’s global best position.</p>
-<p><strong>Update Equations:</strong></p>
-<p>For each particle <span class="math notranslate nohighlight">\(i\)</span> at iteration <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<p>PSO simulates a flock of birds (swarm) moving through the parameter space. It is the default algorithm because it offers a good balance between exploration (searching new areas) and exploitation (refining known good areas).</p>
+<p><strong>Update Equations</strong></p>
 <div class="math notranslate nohighlight">
 \[v_i^{t+1} = \omega v_i^t + c_1 r_1 (pbest_i - x_i^t) + c_2 r_2 (gbest - x_i^t)\]</div>
 <div class="math notranslate nohighlight">
 \[x_i^{t+1} = x_i^t + v_i^{t+1}\]</div>
-<p>Where:
-*   <span class="math notranslate nohighlight">\(\omega\)</span>: Inertia weight (controls momentum).
-*   <span class="math notranslate nohighlight">\(c_1, c_2\)</span>: Cognitive and Social coefficients.
-*   <span class="math notranslate nohighlight">\(r_1, r_2\)</span>: Random numbers in <span class="math notranslate nohighlight">\([0, 1]\)</span>.
-*   <span class="math notranslate nohighlight">\(pbest_i\)</span>: Personal best position of particle <span class="math notranslate nohighlight">\(i\)</span>.
-*   <span class="math notranslate nohighlight">\(gbest\)</span>: Global best position of the swarm.</p>
+<p><strong>Parameter Tuning Guide</strong></p>
+<ul class="simple">
+<li><p><strong>Inertia</strong> (<span class="math notranslate nohighlight">\(\omega\)</span>): Controls momentum.
+*   <em>High (e.g., 0.9)</em>: Particles fly through the space quickly. Good for initial exploration or large, flat energy landscapes.
+*   <em>Low (e.g., 0.4)</em>: Particles slow down and settle. Good for fine-tuning.
+*   <em>Default (0.73)</em>: A mathematically derived “magic number” that generally works well.</p></li>
+<li><p><strong>Cognitive</strong> (<span class="math notranslate nohighlight">\(c_1\)</span>) vs <strong>Social</strong> (<span class="math notranslate nohighlight">\(c_2\)</span>):
+*   <em>High Cognitive</em>: Particles are nostalgic; they return to <em>their own</em> best discoveries. Maintains diversity.
+*   <em>High Social</em>: Particles are conformist; they rush to the <em>swarm’s</em> best discovery. Converges fast but risks premature convergence to local minima.
+*   <em>Recommendation</em>: Keep them equal (1.5) or slightly bias Social if you need faster results.</p></li>
+</ul>
 </section>
 <section id="genetic-algorithm-ga">
 <h2>Genetic Algorithm (GA)<a class="headerlink" href="#genetic-algorithm-ga" title="Link to this heading"></a></h2>
-<p>The GA evolves a population of solutions using operators inspired by biological evolution.</p>
-<p><strong>Key Components:</strong>
-*   <strong>Selection:</strong> Tournament selection is used to choose parents for the next generation.
-*   <strong>Crossover:</strong> Simulated Binary Crossover (SBX) creates offspring by recombining parent parameters.
-*   <strong>Mutation:</strong> Gaussian mutation adds random perturbations to maintain diversity.
-*   <strong>Elitism:</strong> A fraction of the best individuals are preserved unchanged.</p>
+<p>The GA mimics biological evolution. It is often superior for “rough” energy landscapes with many sharp peaks, as it can jump across barriers via crossover.</p>
+<p><strong>Mechanics</strong>
+1.  <strong>Selection</strong>: Uses Tournament Selection. A small group (size 3) is picked at random, and the fittest one becomes a parent.
+2.  <strong>Crossover</strong>: Uses Simulated Binary Crossover (SBX). Parents mix their parameters to create offspring.
+3.  <strong>Mutation</strong>: Adds Gaussian noise to parameters. This prevents the population from becoming identical.</p>
+<p><strong>Tuning Tips</strong>
+*   <strong>Population Size</strong>: Larger is better for complex molecules (flexible linkers). Use 100+ for difficult cases.
+*   <strong>Mutation Rate</strong>: If the algorithm gets stuck early, increase this (e.g., to 0.2).</p>
 </section>
 <section id="grey-wolf-optimizer-gwo">
 <h2>Grey Wolf Optimizer (GWO)<a class="headerlink" href="#grey-wolf-optimizer-gwo" title="Link to this heading"></a></h2>
-<p>GWO mimics the leadership hierarchy and hunting mechanism of grey wolves.</p>
-<p><strong>Hierarchy:</strong>
-*   <span class="math notranslate nohighlight">\(\alpha\)</span> (Alpha): The best solution found so far.
-*   <span class="math notranslate nohighlight">\(\beta\)</span> (Beta): The second best solution.
-*   <span class="math notranslate nohighlight">\(\delta\)</span> (Delta): The third best solution.
-*   <span class="math notranslate nohighlight">\(\omega\)</span> (Omega): The rest of the search agents.</p>
-<p><strong>Position Update:</strong>
-The position of a wolf is updated by averaging the vectors towards the three leaders:</p>
-<div class="math notranslate nohighlight">
-\[\vec{D}_\alpha = |\vec{C}_1 \cdot \vec{X}_\alpha - \vec{X}|, \quad \vec{X}_1 = \vec{X}_\alpha - \vec{A}_1 \cdot \vec{D}_\alpha\]</div>
-<div class="math notranslate nohighlight">
-\[\vec{X}(t+1) = \frac{\vec{X}_1 + \vec{X}_2 + \vec{X}_3}{3}\]</div>
+<p>GWO simulates the leadership hierarchy of wolves. It is mathematically unique because it tracks the <strong>top 3</strong> solutions (<span class="math notranslate nohighlight">\(\alpha, \beta, \delta\)</span>) simultaneously, rather than just one global best.</p>
+<p><strong>When to use GWO?</strong>
+*   GWO is often <strong>faster</strong> than PSO for simple rigid-body stacking (dimers without torsions).
+*   It has fewer parameters to tune (no inertia or coefficients), making it easier to use “out of the box.”</p>
 </section>
-<section id="pso-nelder-mead-hybrid">
-<h2>PSO + Nelder-Mead Hybrid<a class="headerlink" href="#pso-nelder-mead-hybrid" title="Link to this heading"></a></h2>
-<p>This hybrid approach combines the global search capability of PSO with the local refinement of the Nelder-Mead simplex method.
-Periodically, the global best solution found by PSO is used as a starting point for a local Nelder-Mead optimization run to fine-tune the minimum.</p>
+<section id="hybrid-pso-nelder-mead">
+<h2>Hybrid PSO + Nelder-Mead<a class="headerlink" href="#hybrid-pso-nelder-mead" title="Link to this heading"></a></h2>
+<p>This is the most expensive but most accurate method.</p>
+<ol class="arabic simple">
+<li><p><strong>Stage 1 (Global)</strong>: PSO explores the landscape to find a promising basin of attraction.</p></li>
+<li><p><strong>Stage 2 (Local)</strong>: Periodically, the Nelder-Mead simplex algorithm is launched from the best particle to “drill down” to the exact bottom of the well.</p></li>
+</ol>
+<p><strong>Best For:</strong>
+*   Final production runs where you need the energy accurate to 0.01 kJ/mol.
+*   Situations where the energy landscape is “pitted” (many small local minima).</p>
 </section>
-<section id="hyperparameter-optimization">
-<h2>Hyperparameter Optimization<a class="headerlink" href="#hyperparameter-optimization" title="Link to this heading"></a></h2>
-<p>The optimizer includes a built-in hyperparameter tuning framework using <strong>Optuna</strong>. This allows for the automatic discovery of optimal algorithm parameters (e.g., PSO inertia, GA mutation rate) for a specific molecular system.</p>
-<p><strong>Optimization Modes:</strong>
-*   <strong>Sequential:</strong> Optimizes parameters for one molecule at a time, using previous results to warm-start the search.
-*   <strong>Joint:</strong> Finds a single robust set of hyperparameters that performs well across a dataset of multiple molecules.</p>
+<section id="algorithm-selection-cheat-sheet">
+<h2>Algorithm Selection Cheat Sheet<a class="headerlink" href="#algorithm-selection-cheat-sheet" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Scenario</p></th>
+<th class="head"><p>Recommended Optimizer</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>General Dimer</strong></p></td>
+<td><p>PSO</p></td>
+<td><p>Reliable default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>High-Throughput Screening</strong></p></td>
+<td><p>GWO</p></td>
+<td><p>Fast convergence, low tuning.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Flexible Monomers</strong></p></td>
+<td><p>GA or PSO</p></td>
+<td><p>Better at handling higher dimensions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Publication Quality</strong></p></td>
+<td><p>PSO-NM</p></td>
+<td><p>Ensures the true minimum is found.</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
@@ -159,8 +185,8 @@ Periodically, the global best solution found by PSO is used as a starting point 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="inputs_outputs.html" class="btn btn-neutral float-left" title="Input and Output Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="usage.html" class="btn btn-neutral float-right" title="Usage and CLI Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inputs_outputs.html" class="btn btn-neutral float-left" title="Input &amp; Output Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

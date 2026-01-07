@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Input and Output Files &mdash; π-Stack Optimizer 1.0 documentation</title>
+  <title>Input &amp; Output Files &mdash; π-Stack Optimizer 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -60,17 +60,23 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Background</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Input and Output Files</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Input &amp; Output Files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#input-files">Input Files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#xyz-file">XYZ File</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#torsions-json">torsions.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monomer-xyz-file">Monomer XYZ File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#torsions-definition-file-json">Torsions Definition File (JSON)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-results-txt">optimization_results.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#molecular-stack-nmolecules-xyz">molecular_stack_Nmolecules.xyz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#molecule-after-torsion-xyz">molecule_after_torsion.xyz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#traj-csv-optional">traj.csv (Optional)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation_details.html">Implementation Details</a></li>
 </ul>
@@ -89,7 +95,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Input and Output Files</li>
+      <li class="breadcrumb-item active">Input &amp; Output Files</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/sandeepgroup/pi-stack-optimizer/blob/main/docs/inputs_outputs.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -99,77 +105,104 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="input-and-output-files">
-<h1>Input and Output Files<a class="headerlink" href="#input-and-output-files" title="Link to this heading"></a></h1>
+  <section id="input-output-files">
+<h1>Input &amp; Output Files<a class="headerlink" href="#input-output-files" title="Link to this heading"></a></h1>
+<p>The optimizer uses standard chemical file formats where possible, supplemented by a simple JSON schema for flexibility.</p>
 <section id="input-files">
 <h2>Input Files<a class="headerlink" href="#input-files" title="Link to this heading"></a></h2>
-<section id="xyz-file">
-<h3>XYZ File<a class="headerlink" href="#xyz-file" title="Link to this heading"></a></h3>
-<p>The primary input is a standard <strong>XYZ file</strong> containing the atomic coordinates of a single monomer unit.
-*   <strong>Format:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Line 1: Number of atoms.</p></li>
-<li><p>Line 2: Comment line (can include charge/multiplicity info).</p></li>
-<li><p>Line 3+: Element symbol and X, Y, Z coordinates.</p></li>
+<section id="monomer-xyz-file">
+<h3>Monomer XYZ File<a class="headerlink" href="#monomer-xyz-file" title="Link to this heading"></a></h3>
+<p>The primary input is a standard XYZ file specifying the geometry of a single monomer.</p>
+<ul class="simple">
+<li><p><strong>Format:</strong> Standard XYZ (number of atoms on first line, comment on second).</p></li>
+<li><p><strong>Units:</strong> Angstroms.</p></li>
+<li><p><strong>Requirements:</strong>
+*   Must be a valid geometry (no overlapping atoms).
+*   Orientation relative to axes does <em>not</em> matter; the program automatically aligns the molecular plane to the XY plane.</p></li>
 </ul>
-</div></blockquote>
 <p><strong>Example (benzene.xyz):</strong></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>12
 Benzene molecule
-C        0.00000        1.39700        0.00000
-C        1.21000        0.69800        0.00000
-...
+C         -1.21310        0.68840        0.00000
+C         -1.20280       -0.70630        0.00000
+C          0.01030       -1.39470        0.00000
+C          1.21310       -0.68840        0.00000
+C          1.20280        0.70630        0.00000
+C         -0.01030        1.39470        0.00000
+H         -2.15190        1.22980        0.00000
+H         -2.15130       -1.22940        0.00000
+H          0.01900       -2.48390        0.00000
+H          2.15190       -1.22980        0.00000
+H          2.15130        1.22940        0.00000
+H         -0.01900        2.48390        0.00000
 </pre></div>
 </div>
 </section>
-<section id="torsions-json">
-<h3>torsions.json<a class="headerlink" href="#torsions-json" title="Link to this heading"></a></h3>
-<p>For molecules with flexible bonds, a JSON file defines the definition of rotatable dihedrals.</p>
-<ul class="simple">
-<li><p><strong>Structure:</strong> A list of torsion objects.</p></li>
-<li><p><strong>Fields:</strong></p>
+<section id="torsions-definition-file-json">
+<h3>Torsions Definition File (JSON)<a class="headerlink" href="#torsions-definition-file-json" title="Link to this heading"></a></h3>
+<p>For molecules with flexible bonds, you can specify which dihedrals to optimize using a JSON file.</p>
+<p><strong>Schema:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;indexing&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0-based&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;torsions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linker Rotation&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;atoms&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;rotate_side&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Fields:</strong></p>
 <ul>
-<li><p><cite>indices</cite>: Array of 4 atom indices (0-based or 1-based, system detects automatically) defining the dihedral angle.</p></li>
-<li><p><cite>rotate_side</cite>: Specifies which part of the molecule moves (<cite>“left”</cite>, <cite>“right”</cite>, or <cite>“center”</cite>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">indexing</span></code>: (Optional) <code class="docutils literal notranslate"><span class="pre">&quot;0-based&quot;</span></code> (default, Python/C style) or <code class="docutils literal notranslate"><span class="pre">&quot;1-based&quot;</span></code> (standard chemistry style).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">torsions</span></code>: List of torsion definitions.
+*   <code class="docutils literal notranslate"><span class="pre">atoms</span></code>: List of 4 atom indices defining the dihedral angle <span class="math notranslate nohighlight">\(i-j-k-l\)</span>. The bond <span class="math notranslate nohighlight">\(j-k\)</span> is the axis of rotation.
+*   <code class="docutils literal notranslate"><span class="pre">rotate_side</span></code>: (Optional) Which side of the bond rotates.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;d&quot;</span></code> (default): Distal side (finding atoms connected to atom <span class="math notranslate nohighlight">\(l\)</span>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;p&quot;</span></code>: Proximal side (finding atoms connected to atom <span class="math notranslate nohighlight">\(i\)</span>).</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: (Optional) Label for logging.</p></li>
 </ul>
 </li>
 </ul>
-<p><strong>Example:</strong></p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;indices&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;rotate_side&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;right&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">]</span>
-</pre></div>
-</div>
 </section>
 </section>
 <section id="output-files">
 <h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
-<p>Generated upon completion of a run:</p>
-<ol class="arabic">
-<li><p><strong>molecule_after_torsion.xyz</strong></p>
-<p>The geometry of the single monomer unit in its optimized internal conformation (if flexible bonds were optimized).</p>
-</li>
-<li><p><strong>molecular_stack_[N]molecules.xyz</strong></p>
-<p>A resulting stack structure (typically 10 layers) generated using the optimal rigid body parameters found. This is useful for visual inspection.</p>
-</li>
-<li><p><strong>optimization_results.txt</strong></p>
-<p>A summary text file containing:
-*   Final optimized parameters ( <span class="math notranslate nohighlight">\(T, C, \theta\)</span> ).
-*   Final Binding Energy.
-*   Details of the xTB calculation.</p>
-</li>
-<li><p><strong>pso_trajectory.csv</strong> (Optional)</p>
-<p>If trajectory logging is enabled, this file contains the history of the optimization, including:
-*   Iteration number.
-*   Particle ID.
-*   Parameter values.
-*   Energy/Fitness values.</p>
-</li>
+<section id="optimization-results-txt">
+<h3>optimization_results.txt<a class="headerlink" href="#optimization-results-txt" title="Link to this heading"></a></h3>
+<p>The main summary file generated after a run. It contains:</p>
+<ol class="arabic simple">
+<li><p><strong>Best Objective Value:</strong> The optimized score (Energy + Penalties).</p></li>
+<li><p><strong>Binding Energy:</strong> The pure binding energy (<span class="math notranslate nohighlight">\(E_{bind}\)</span>) in kJ/mol.</p></li>
+<li><p><strong>Best Parameters:</strong> The specific translation, rotation, and torsion angles that produced the best geometry.</p></li>
+<li><p><strong>Full Torsion Angles:</strong> If torsions were used, the final values of all dihedrals are listed.</p></li>
 </ol>
+</section>
+<section id="molecular-stack-nmolecules-xyz">
+<h3>molecular_stack_Nmolecules.xyz<a class="headerlink" href="#molecular-stack-nmolecules-xyz" title="Link to this heading"></a></h3>
+<p>The final optimized geometry of the stack.</p>
+<ul class="simple">
+<li><p>Contains <span class="math notranslate nohighlight">\(N\)</span> copies of the monomer (e.g., 2 for a dimer).</p></li>
+<li><p>This file is ready for visualization in VMD, PyMOL, or Mercury.</p></li>
+</ul>
+</section>
+<section id="molecule-after-torsion-xyz">
+<h3>molecule_after_torsion.xyz<a class="headerlink" href="#molecule-after-torsion-xyz" title="Link to this heading"></a></h3>
+<p>The geometry of a <strong>single monomer</strong> in its optimized conformation (i.e., with the optimal internal torsion angles applied), before it is stacked. This is useful for inspecting how the monomer’s shape changed during optimization.</p>
+</section>
+<section id="traj-csv-optional">
+<h3>traj.csv (Optional)<a class="headerlink" href="#traj-csv-optional" title="Link to this heading"></a></h3>
+<p>Generated if <code class="docutils literal notranslate"><span class="pre">--print-trajectories</span></code> is enabled. A raw CSV file containing the history of every evaluation.</p>
+<p><strong>Columns:</strong>
+<code class="docutils literal notranslate"><span class="pre">iteration</span></code>, <code class="docutils literal notranslate"><span class="pre">particle_id</span></code>, <code class="docutils literal notranslate"><span class="pre">is_global_best</span></code>, <code class="docutils literal notranslate"><span class="pre">c_theta</span></code>, <code class="docutils literal notranslate"><span class="pre">s_theta</span></code>, <code class="docutils literal notranslate"><span class="pre">Tx</span></code>, <code class="docutils literal notranslate"><span class="pre">Ty</span></code>, <code class="docutils literal notranslate"><span class="pre">Tz</span></code>, <code class="docutils literal notranslate"><span class="pre">Cx</span></code>, <code class="docutils literal notranslate"><span class="pre">Cy</span></code>, <code class="docutils literal notranslate"><span class="pre">[torsions...]</span></code>, <code class="docutils literal notranslate"><span class="pre">energy_score</span></code></p>
+</section>
 </section>
 </section>
 

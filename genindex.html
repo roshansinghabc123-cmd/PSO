@@ -421,9 +421,9 @@ window.addEventListener("load", load);
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input and Output Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inputs_outputs.html">Input &amp; Output Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">Optimization Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage and CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementation_details.html">Implementation Details</a></li>
 </ul>
@@ -481,24 +481,10 @@ window.addEventListener("load", load);
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    --clash-cutoff
-
-      <ul>
-        <li><a href="usage.html#cmdoption-clash-cutoff">command line option</a>
-</li>
-      </ul></li>
-      <li>
     --cognitive
 
       <ul>
         <li><a href="usage.html#cmdoption-cognitive">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --ga-crossover-rate
-
-      <ul>
-        <li><a href="usage.html#cmdoption-ga-crossover-rate">command line option</a>
 </li>
       </ul></li>
       <li>
@@ -516,45 +502,10 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
-    --gfn
-
-      <ul>
-        <li><a href="usage.html#cmdoption-gfn">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --gwo-a-end
-
-      <ul>
-        <li><a href="usage.html#cmdoption-gwo-a-end">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --gwo-a-start
-
-      <ul>
-        <li><a href="usage.html#cmdoption-gwo-a-start">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --gwo-pack-size
-
-      <ul>
-        <li><a href="usage.html#cmdoption-gwo-pack-size">command line option</a>
-</li>
-      </ul></li>
-      <li>
     --inertia
 
       <ul>
         <li><a href="usage.html#cmdoption-inertia">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --joint
-
-      <ul>
-        <li><a href="usage.html#cmdoption-joint">command line option</a>
 </li>
       </ul></li>
       <li>
@@ -564,27 +515,27 @@ window.addEventListener("load", load);
         <li><a href="usage.html#cmdoption-max-iters">command line option</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    --molecules-root
+    --method
 
       <ul>
-        <li><a href="usage.html#cmdoption-molecules-root">command line option</a>
+        <li><a href="usage.html#cmdoption-method">command line option</a>
 </li>
       </ul></li>
+      <li>
+    --n-layer
+
+      <ul>
+        <li><a href="usage.html#cmdoption-n-layer">command line option</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     --optimizer
 
       <ul>
         <li><a href="usage.html#cmdoption-optimizer">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    --r-min
-
-      <ul>
-        <li><a href="usage.html#cmdoption-r-min">command line option</a>
 </li>
       </ul></li>
       <li>
@@ -602,6 +553,13 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
+    --solvent
+
+      <ul>
+        <li><a href="usage.html#cmdoption-solvent">command line option</a>
+</li>
+      </ul></li>
+      <li>
     --swarm-size
 
       <ul>
@@ -609,35 +567,7 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
-    --trials-per-molecule
-
-      <ul>
-        <li><a href="usage.html#cmdoption-trials-per-molecule">command line option</a>
-</li>
-      </ul></li>
-      <li>
     --workers
-
-      <ul>
-        <li><a href="usage.html#cmdoption-workers">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -n
-
-      <ul>
-        <li><a href="usage.html#cmdoption-max-iters">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -opt
-
-      <ul>
-        <li><a href="usage.html#cmdoption-optimizer">command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -w
 
       <ul>
         <li><a href="usage.html#cmdoption-workers">command line option</a>
@@ -699,53 +629,31 @@ window.addEventListener("load", load);
     command line option
 
       <ul>
-        <li><a href="usage.html#cmdoption-clash-cutoff">--clash-cutoff</a>
-</li>
         <li><a href="usage.html#cmdoption-cognitive">--cognitive</a>
-</li>
-        <li><a href="usage.html#cmdoption-ga-crossover-rate">--ga-crossover-rate</a>
 </li>
         <li><a href="usage.html#cmdoption-ga-mutation-rate">--ga-mutation-rate</a>
 </li>
         <li><a href="usage.html#cmdoption-ga-population">--ga-population</a>
 </li>
-        <li><a href="usage.html#cmdoption-gfn">--gfn</a>
-</li>
-        <li><a href="usage.html#cmdoption-gwo-a-end">--gwo-a-end</a>
-</li>
-        <li><a href="usage.html#cmdoption-gwo-a-start">--gwo-a-start</a>
-</li>
-        <li><a href="usage.html#cmdoption-gwo-pack-size">--gwo-pack-size</a>
-</li>
         <li><a href="usage.html#cmdoption-inertia">--inertia</a>
-</li>
-        <li><a href="usage.html#cmdoption-joint">--joint</a>
 </li>
         <li><a href="usage.html#cmdoption-max-iters">--max-iters</a>
 </li>
-        <li><a href="usage.html#cmdoption-molecules-root">--molecules-root</a>
+        <li><a href="usage.html#cmdoption-method">--method</a>
+</li>
+        <li><a href="usage.html#cmdoption-n-layer">--n-layer</a>
 </li>
         <li><a href="usage.html#cmdoption-optimizer">--optimizer</a>
-</li>
-        <li><a href="usage.html#cmdoption-r-min">--r-min</a>
 </li>
         <li><a href="usage.html#cmdoption-seed">--seed</a>
 </li>
         <li><a href="usage.html#cmdoption-social">--social</a>
 </li>
+        <li><a href="usage.html#cmdoption-solvent">--solvent</a>
+</li>
         <li><a href="usage.html#cmdoption-swarm-size">--swarm-size</a>
 </li>
-        <li><a href="usage.html#cmdoption-trials-per-molecule">--trials-per-molecule</a>
-</li>
         <li><a href="usage.html#cmdoption-workers">--workers</a>
-</li>
-        <li><a href="usage.html#cmdoption-max-iters">-n</a>
-</li>
-        <li><a href="usage.html#cmdoption-optimizer">-opt</a>
-</li>
-        <li><a href="usage.html#cmdoption-workers">-w</a>
-</li>
-        <li><a href="usage.html#cmdoption-arg-input_file">input_file</a>
 </li>
       </ul></li>
   </ul></td>
@@ -832,13 +740,6 @@ window.addEventListener("load", load);
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#modules.optimizer.PSOConfig.inertia">inertia (modules.optimizer.PSOConfig attribute)</a>
 </li>
-      <li>
-    input_file
-
-      <ul>
-        <li><a href="usage.html#cmdoption-arg-input_file">command line option</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="modules.html#modules.geometry.intramolecular_clash_penalty">intramolecular_clash_penalty() (in module modules.geometry)</a>
