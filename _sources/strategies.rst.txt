@@ -49,7 +49,7 @@ Grey Wolf Optimizer (GWO)
 
 GWO simulates the leadership hierarchy of wolves. It is mathematically unique because it tracks the **top 3** solutions (:math:`\alpha, \beta, \delta`) simultaneously, rather than just one global best.
 
-**When to use GWO?**
+**Best Use Cases**
 *   GWO is often **faster** than PSO for simple rigid-body stacking (dimers without torsions).
 *   It has fewer parameters to tune (no inertia or coefficients), making it easier to use "out of the box."
 
