@@ -6,3 +6,4 @@ sphinx_rtd_theme
 sphinx-design
 sphinx-copybutton
 sphinx-togglebutton
+sphinxcontrib-mermaid
