@@ -65,24 +65,4 @@ This is the most expensive but most accurate method.
 *   Final production runs where you need the energy accurate to 0.01 kJ/mol.
 *   Situations where the energy landscape is "pitted" (many small local minima).
 
-Algorithm Selection Cheat Sheet
--------------------------------
 
-.. list-table::
-   :header-rows: 1
-
-   * - Scenario
-     - Recommended Optimizer
-     - Notes
-   * - **General Dimer**
-     - PSO
-     - Reliable default.
-   * - **High-Throughput Screening**
-     - GWO
-     - Fast convergence, low tuning.
-   * - **Flexible Monomers**
-     - GA or PSO
-     - Better at handling higher dimensions.
-   * - **Publication Quality**
-     - PSO-NM
-     - Ensures the true minimum is found.
