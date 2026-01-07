@@ -486,23 +486,38 @@ window.addEventListener("load", load);
 <h2>Entry Point (<cite>pi-stack-generator.py</cite>)<a class="headerlink" href="#entry-point-pi-stack-generator-py" title="Link to this heading"></a></h2>
 <p>The <cite>main()</cite> function in <code class="docutils literal notranslate"><span class="pre">pi-stack-generator.py</span></code> serves as the conductor:</p>
 <ol class="arabic simple">
-<li><p><strong>Initialization</strong>:
-*   Parses command line arguments (<cite>argparse</cite>).
-*   Sets up logging (<cite>modules/logging_helpers.py</cite>).</p></li>
-<li><p><strong>Preprocessing</strong>:
-*   Reads the monomer XYZ file.
-*   <strong>Validation</strong>: Calls <code class="docutils literal notranslate"><span class="pre">report_geometry_validation</span></code> to ensure the input monomer has sane bond lengths and no overlaps.
-*   <strong>Alignment</strong>: Uses <code class="docutils literal notranslate"><span class="pre">align_pi_core_to_xy</span></code> to rotate the flat part of the molecule to the XY plane. This makes the optimization variables (translation/rotation) more physically intuitive.
-*   <strong>Torsions</strong>: Loads torsion definitions and optionally detects symmetry (<cite>modules/torsion.py</cite>).</p></li>
-<li><p><strong>Setup</strong>:
-*   Initializes the <code class="docutils literal notranslate"><span class="pre">BatchObjective</span></code> class, which encapsulates the cost function.
-*   Initializes the <code class="docutils literal notranslate"><span class="pre">XTBWorkerPool</span></code> to manage parallel XTB processes.
-*   Selects the optimization strategy (PSO, GA, GWO) via <code class="docutils literal notranslate"><span class="pre">create_optimizer</span></code>.</p></li>
-<li><p><strong>Execution List</strong>:
-*   Runs the optimization loop: <code class="docutils literal notranslate"><span class="pre">optimizer_obj.optimize(objective)</span></code>.</p></li>
-<li><p><strong>Result Handling</strong>:
-*   Computes the final binding energy of the best solution.
-*   Writes output XYZ files and <code class="docutils literal notranslate"><span class="pre">optimization_results.txt</span></code>.</p></li>
+<li><p><strong>Initialization</strong>:</p>
+<ul class="simple">
+<li><p>Parses command line arguments (<cite>argparse</cite>).</p></li>
+<li><p>Sets up logging (<cite>modules/logging_helpers.py</cite>).</p></li>
+</ul>
+</li>
+<li><p><strong>Preprocessing</strong>:</p>
+<ul class="simple">
+<li><p>Reads the monomer XYZ file.</p></li>
+<li><p><strong>Validation</strong>: Calls <code class="docutils literal notranslate"><span class="pre">report_geometry_validation</span></code> to ensure the input monomer has sane bond lengths and no overlaps.</p></li>
+<li><p><strong>Alignment</strong>: Uses <code class="docutils literal notranslate"><span class="pre">align_pi_core_to_xy</span></code> to rotate the flat part of the molecule to the XY plane. This makes the optimization variables (translation/rotation) more physically intuitive.</p></li>
+<li><p><strong>Torsions</strong>: Loads torsion definitions and optionally detects symmetry (<cite>modules/torsion.py</cite>).</p></li>
+</ul>
+</li>
+<li><p><strong>Setup</strong>:</p>
+<ul class="simple">
+<li><p>Initializes the <code class="docutils literal notranslate"><span class="pre">BatchObjective</span></code> class, which encapsulates the cost function.</p></li>
+<li><p>Initializes the <code class="docutils literal notranslate"><span class="pre">XTBWorkerPool</span></code> to manage parallel XTB processes.</p></li>
+<li><p>Selects the optimization strategy (PSO, GA, GWO) via <code class="docutils literal notranslate"><span class="pre">create_optimizer</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Execution List</strong>:</p>
+<ul class="simple">
+<li><p>Runs the optimization loop: <code class="docutils literal notranslate"><span class="pre">optimizer_obj.optimize(objective)</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Result Handling</strong>:</p>
+<ul class="simple">
+<li><p>Computes the final binding energy of the best solution.</p></li>
+<li><p>Writes output XYZ files and <code class="docutils literal notranslate"><span class="pre">optimization_results.txt</span></code>.</p></li>
+</ul>
+</li>
 </ol>
 </section>
 <section id="core-components">
@@ -512,21 +527,33 @@ window.addEventListener("load", load);
 <p>This class defines the “landscape” that the optimizer explores. Its primary method is <code class="docutils literal notranslate"><span class="pre">batch_evaluate(P)</span></code>, which takes a batch of parameter vectors and returns their energy scores.</p>
 <p><strong>The Evaluation Pipeline:</strong></p>
 <ol class="arabic simple">
-<li><p><strong>Parameter Decoding</strong>:
-*   The input vector <cite>P</cite> contains rigid body parameters (rotation, translation) and torsion angles.
-*   Torsions are mapped from reduced space (if symmetry is used) to full space.</p></li>
-<li><p><strong>Geometry Reconstruction</strong>:
-*   <strong>Torsions</strong>: <code class="docutils literal notranslate"><span class="pre">_apply_torsions</span></code> rotates the monomer fragments based on the angles.
-*   <strong>Topology Check</strong>: It validates that rotating bonds didn’t accidentally break or form new bonds (e.g., steric clashes causing ring spearing).
-*   <strong>Stack Building</strong>: <code class="docutils literal notranslate"><span class="pre">build_n_layer_stack</span></code> creates the dimer (or n-mer) by applying the rigid body transformation to the monomer copies.</p></li>
-<li><p><strong>Fast Pre-Screening (The Penalties)</strong>:
-*   Before running expensive quantum checks, the code runs fast geometric checks.
-*   <strong>Clash Penalty</strong>: Checks if atoms between layers are too close (&lt; 1.6 Å).
-*   <strong>Intramolecular Penalty</strong>: Checks if the monomer itself is crashing into itself.
-*   <em>Optimization Note:</em> If a severe clash is found, the xTB calculation is <strong>skipped entirely</strong>, and a high penalty score is returned. This saves massive amounts of compute time.</p></li>
-<li><p><strong>Energy Calculation</strong>:
-*   If the geometry is safe, a task is submitted to the <code class="docutils literal notranslate"><span class="pre">XTBWorkerPool</span></code>.
-*   The binding energy is calculated as: <span class="math notranslate nohighlight">\(E_{bind} = E_{stack} - N \times E_{monomer}\)</span>.</p></li>
+<li><p><strong>Parameter Decoding</strong>:</p>
+<ul class="simple">
+<li><p>The input vector <cite>P</cite> contains rigid body parameters (rotation, translation) and torsion angles.</p></li>
+<li><p>Torsions are mapped from reduced space (if symmetry is used) to full space.</p></li>
+</ul>
+</li>
+<li><p><strong>Geometry Reconstruction</strong>:</p>
+<ul class="simple">
+<li><p><strong>Torsions</strong>: <code class="docutils literal notranslate"><span class="pre">_apply_torsions</span></code> rotates the monomer fragments based on the angles.</p></li>
+<li><p><strong>Topology Check</strong>: It validates that rotating bonds didn’t accidentally break or form new bonds (e.g., steric clashes causing ring spearing).</p></li>
+<li><p><strong>Stack Building</strong>: <code class="docutils literal notranslate"><span class="pre">build_n_layer_stack</span></code> creates the dimer (or n-mer) by applying the rigid body transformation to the monomer copies.</p></li>
+</ul>
+</li>
+<li><p><strong>Fast Pre-Screening (The Penalties)</strong>:</p>
+<ul class="simple">
+<li><p>Before running expensive quantum checks, the code runs fast geometric checks.</p></li>
+<li><p><strong>Clash Penalty</strong>: Checks if atoms between layers are too close (&lt; 1.6 Å).</p></li>
+<li><p><strong>Intramolecular Penalty</strong>: Checks if the monomer itself is crashing into itself.</p></li>
+<li><p><em>Optimization Note:</em> If a severe clash is found, the xTB calculation is <strong>skipped entirely</strong>, and a high penalty score is returned. This saves massive amounts of compute time.</p></li>
+</ul>
+</li>
+<li><p><strong>Energy Calculation</strong>:</p>
+<ul class="simple">
+<li><p>If the geometry is safe, a task is submitted to the <code class="docutils literal notranslate"><span class="pre">XTBWorkerPool</span></code>.</p></li>
+<li><p>The binding energy is calculated as: <span class="math notranslate nohighlight">\(E_{bind} = E_{stack} - N \times E_{monomer}\)</span>.</p></li>
+</ul>
+</li>
 </ol>
 </section>
 <section id="geometry-engine-modules-geometry-py">
@@ -534,9 +561,12 @@ window.addEventListener("load", load);
 <p>This module handles the 3D math.</p>
 <ul class="simple">
 <li><p><strong>Principal Component Analysis (PCA)</strong>: Used in <code class="docutils literal notranslate"><span class="pre">align_pi_core_to_xy</span></code>. It finds the plane of “flatness” in a molecule by analyzing the covariance matrix of atomic coordinates.</p></li>
-<li><p><strong>Collision Detection</strong>:
-*   Uses <code class="docutils literal notranslate"><span class="pre">scipy.spatial.cKDTree</span></code> (if available) for O(N log N) neighbor search.
-*   Falls back to NumPy broadcasting (O(N^2)) for environments without SciPy.</p></li>
+<li><p><strong>Collision Detection</strong>:</p>
+<ul>
+<li><p>Uses <code class="docutils literal notranslate"><span class="pre">scipy.spatial.cKDTree</span></code> (if available) for O(N log N) neighbor search.</p></li>
+<li><p>Falls back to NumPy broadcasting (O(N^2)) for environments without SciPy.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 </section>
@@ -545,11 +575,14 @@ window.addEventListener("load", load);
 <p>The software uses a <strong>Process-based Parallelism</strong> model via Python’s <cite>multiprocessing</cite> module.</p>
 <ul class="simple">
 <li><p><strong>Why Processes?</strong> Python’s Global Interpreter Lock (GIL) prevents threads from utilizing multiple CPU cores for CPU-bound tasks. Since we are launching external subprocesses (xTB), threads could work, but processes allow us to isolate the memory environment of each worker.</p></li>
-<li><p><strong>The Pool</strong>:
-*   The main process creates a queue of tasks.
-*   $N$ worker processes consume tasks from the queue.
-*   Each worker creates a unique temporary directory (<cite>/tmp/xtb_run_…</cite>) to run xTB without file collisions.
-*   Results are sent back via a results queue.</p></li>
+<li><p><strong>The Pool</strong>:</p>
+<ul>
+<li><p>The main process creates a queue of tasks.</p></li>
+<li><p>$N$ worker processes consume tasks from the queue.</p></li>
+<li><p>Each worker creates a unique temporary directory (<cite>/tmp/xtb_run_…</cite>) to run xTB without file collisions.</p></li>
+<li><p>Results are sent back via a results queue.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="optimization-algorithms-modules-optimizer-py">
