@@ -10,7 +10,7 @@ To get started with the **π-Stack Optimizer**, follow these steps to set up you
 
    .. code-block:: bash
 
-      git clone https://github.com/roshansinghabc123-cmd/PSO.git
+      git clone https://github.com/sandeepgroup/pi-stack-optimizer.git
       cd PSO
 
 2. **Set Up a Virtual Environment**
