@@ -87,8 +87,8 @@ This module handles the 3D math.
 *   **Principal Component Analysis (PCA)**: Used in ``align_pi_core_to_xy``. It finds the plane of "flatness" in a molecule by analyzing the covariance matrix of atomic coordinates.
 *   **Collision Detection**:
 
-    *   Uses ``scipy.spatial.cKDTree`` (if available) for O(N log N) neighbor search.
-    *   Falls back to NumPy broadcasting (O(N^2)) for environments without SciPy.
+    *   Uses ``scipy.spatial.cKDTree`` (if available) for :math:`O(N \log N)` neighbor search.
+    *   Falls back to NumPy broadcasting (:math:`O(N^2)`) for environments without SciPy.
 
 Concurrency Model (`modules/xtb_workers.py`)
 --------------------------------------------
@@ -99,7 +99,7 @@ The software uses a **Process-based Parallelism** model via Python's `multiproce
 *   **The Pool**:
 
     *   The main process creates a queue of tasks.
-    *   $N$ worker processes consume tasks from the queue.
+    *   :math:`N` worker processes consume tasks from the queue.
     *   Each worker creates a unique temporary directory (`/tmp/xtb_run_...`) to run xTB without file collisions.
     *   Results are sent back via a results queue.
 
