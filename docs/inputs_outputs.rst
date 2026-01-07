@@ -1,18 +1,21 @@
-Input and Output Files
-======================
+Input & Output Files
+====================
+
+The optimizer uses standard chemical file formats where possible, supplemented by a simple JSON schema for flexibility.
 
 Input Files
 -----------
 
-XYZ File
-~~~~~~~~
+Monomer XYZ File
+~~~~~~~~~~~~~~~~
 
-The primary input is a standard **XYZ file** containing the atomic coordinates of a single monomer unit.
-*   **Format:**
+The primary input is a standard XYZ file specifying the geometry of a single monomer.
 
-    *   Line 1: Number of atoms.
-    *   Line 2: Comment line (can include charge/multiplicity info).
-    *   Line 3+: Element symbol and X, Y, Z coordinates.
+*   **Format:** Standard XYZ (number of atoms on first line, comment on second).
+*   **Units:** Angstroms.
+*   **Requirements:**
+    *   Must be a valid geometry (no overlapping atoms).
+    *   Orientation relative to axes does *not* matter; the program automatically aligns the molecular plane to the XY plane.
 
 **Example (benzene.xyz):**
 
@@ -20,56 +23,81 @@ The primary input is a standard **XYZ file** containing the atomic coordinates o
 
    12
    Benzene molecule
-   C        0.00000        1.39700        0.00000
-   C        1.21000        0.69800        0.00000
-   ...
+   C         -1.21310        0.68840        0.00000
+   C         -1.20280       -0.70630        0.00000
+   C          0.01030       -1.39470        0.00000
+   C          1.21310       -0.68840        0.00000
+   C          1.20280        0.70630        0.00000
+   C         -0.01030        1.39470        0.00000
+   H         -2.15190        1.22980        0.00000
+   H         -2.15130       -1.22940        0.00000
+   H          0.01900       -2.48390        0.00000
+   H          2.15190       -1.22980        0.00000
+   H          2.15130        1.22940        0.00000
+   H         -0.01900        2.48390        0.00000
 
-torsions.json
-~~~~~~~~~~~~~
+Torsions Definition File (JSON)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For molecules with flexible bonds, a JSON file defines the definition of rotatable dihedrals.
+For molecules with flexible bonds, you can specify which dihedrals to optimize using a JSON file.
 
-*   **Structure:** A list of torsion objects.
-*   **Fields:**
-
-    *   `indices`: Array of 4 atom indices (0-based or 1-based, system detects automatically) defining the dihedral angle.
-    *   `rotate_side`: Specifies which part of the molecule moves (`"left"`, `"right"`, or `"center"`).
-
-**Example:**
+**Schema:**
 
 .. code-block:: json
 
-   [
+   {
+     "indexing": "0-based",
+     "torsions": [
        {
-           "indices": [0, 1, 4, 5],
-           "rotate_side": "right"
+         "name": "Linker Rotation",
+         "atoms": [0, 1, 2, 3],
+         "rotate_side": "d"
        }
-   ]
+     ]
+   }
+
+**Fields:**
+
+*   ``indexing``: (Optional) ``"0-based"`` (default, Python/C style) or ``"1-based"`` (standard chemistry style).
+*   ``torsions``: List of torsion definitions.
+    *   ``atoms``: List of 4 atom indices defining the dihedral angle :math:`i-j-k-l`. The bond :math:`j-k` is the axis of rotation.
+    *   ``rotate_side``: (Optional) Which side of the bond rotates.
+
+        *   ``"d"`` (default): Distal side (finding atoms connected to atom :math:`l`).
+        *   ``"p"``: Proximal side (finding atoms connected to atom :math:`i`).
+
+    *   ``name``: (Optional) Label for logging.
 
 Output Files
 ------------
 
-Generated upon completion of a run:
+optimization_results.txt
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  **molecule_after_torsion.xyz**
-    
-    The geometry of the single monomer unit in its optimized internal conformation (if flexible bonds were optimized).
+The main summary file generated after a run. It contains:
 
-2.  **molecular_stack_[N]molecules.xyz**
-    
-    A resulting stack structure (typically 10 layers) generated using the optimal rigid body parameters found. This is useful for visual inspection.
+1.  **Best Objective Value:** The optimized score (Energy + Penalties).
+2.  **Binding Energy:** The pure binding energy (:math:`E_{bind}`) in kJ/mol.
+3.  **Best Parameters:** The specific translation, rotation, and torsion angles that produced the best geometry.
+4.  **Full Torsion Angles:** If torsions were used, the final values of all dihedrals are listed.
 
-3.  **optimization_results.txt**
-    
-    A summary text file containing:
-    *   Final optimized parameters ( :math:`T, C, \theta` ).
-    *   Final Binding Energy.
-    *   Details of the xTB calculation.
+molecular_stack_Nmolecules.xyz
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-4.  **pso_trajectory.csv** (Optional)
-    
-    If trajectory logging is enabled, this file contains the history of the optimization, including:
-    *   Iteration number.
-    *   Particle ID.
-    *   Parameter values.
-    *   Energy/Fitness values.
+The final optimized geometry of the stack.
+
+*   Contains :math:`N` copies of the monomer (e.g., 2 for a dimer).
+*   This file is ready for visualization in VMD, PyMOL, or Mercury.
+
+molecule_after_torsion.xyz
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The geometry of a **single monomer** in its optimized conformation (i.e., with the optimal internal torsion angles applied), before it is stacked. This is useful for inspecting how the monomer's shape changed during optimization.
+
+traj.csv (Optional)
+~~~~~~~~~~~~~~~~~~~
+
+Generated if ``--print-trajectories`` is enabled. A raw CSV file containing the history of every evaluation.
+
+**Columns:**
+``iteration``, ``particle_id``, ``is_global_best``, ``c_theta``, ``s_theta``, ``Tx``, ``Ty``, ``Tz``, ``Cx``, ``Cy``, ``[torsions...]``, ``energy_score``
